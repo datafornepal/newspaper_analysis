@@ -4,6 +4,9 @@ import feedparser
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import date
+import glob, os
+import plotly
+import plotly.graph_objects as go
 
 links = [
  '/about-town',
@@ -34,6 +37,32 @@ links = [
  '/travel',
  '/world']
 
+data_level1 = [
+'population census', 
+'household survey', 
+'geospatial data', 
+'statistics', 
+'data', 
+'study', 'research', 
+'report',
+'data literacy']
+
+data_level2 = ['GDP', 
+'CPI']
+
+data_level3 = ['sample size', 
+'regression', 
+'correlation']
+
+def level1_count(article):
+    count_list = []
+    for word in data_level1:
+        word_count = article.count(word)
+        if word_count > 0:
+            count_list.append({word:word_count})
+    return count_list
+
+
 def cleanHTML(raw_html):
     return BeautifulSoup(raw_html, "lxml").text
 
@@ -47,9 +76,54 @@ def performRSS(url, categories):
             all_links.append(temp_dict)        
     return all_links
 
+def level1_len(count_list):
+    return len(count_list)
+
+def create_level1(df):
+    traces = []
+    for i in df.columns[1:]:
+        trace = go.Bar(x=df['Newspaper'], y=df[i], name=i, text=df[i], textposition="outside")
+        traces.append(trace)
+    data = traces
+    layout = go.Layout(barmode='group')
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(font=dict(size=9))
+    div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+    return div
+
+
 @application.route('/')
 def index():
-    return render_template('index.html')
+    df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_HT['level1'] = df_HT.content.apply(level1_count)
+    df_OK['level1'] = df_OK.content.apply(level1_count)
+    df_NT['level1'] = df_NT.content.apply(level1_count)
+    df_TN['level1'] = df_TN.content.apply(level1_count)
+    df_KT['level1'] = df_KT.content.apply(level1_count)
+    df_LK['level1'] = df_LK.content.apply(level1_count)
+    df_HT['level1_len'] = df_HT.level1.apply(level1_len)
+    df_OK['level1_len'] = df_OK.level1.apply(level1_len)
+    df_NT['level1_len'] = df_NT.level1.apply(level1_len)
+    df_TN['level1_len'] = df_TN.level1.apply(level1_len)
+    df_KT['level1_len'] = df_KT.level1.apply(level1_len)
+    df_LK['level1_len'] = df_LK.level1.apply(level1_len)
+    data = [
+    ['The Himalayan Times', df_HT.level1_len.sum(), df_HT.shape[0]],
+    ['Online Khabar', df_OK.level1_len.sum(), df_OK.shape[0]],
+    ['Nepali Times', df_NT.level1_len.sum(), df_NT.shape[0]],
+    ['Telegraph Nepal', df_TN.level1_len.sum(), df_TN.shape[0]],
+    ['Katmandu Tribune', df_KT.level1_len.sum(), df_KT.shape[0]],
+    ['Lokaantar', df_LK.level1_len.sum(), df_LK.shape[0]]
+       ] 
+    df = pd.DataFrame(data, columns = ['Newspaper', 'Level1', 'News Articles']) 
+    div = create_level1(df)
+    tables=[df.to_html(classes='table-auto', escape=False)]
+    return render_template('index.html', div=div, tables=tables)
 
 @application.route('/getdata')
 def getdata():
