@@ -37,22 +37,21 @@ links = [
  '/travel',
  '/world']
 
-data_level1 = [
-'population census', 
-'household survey', 
-'geospatial data', 
-'statistics', 
-'data', 
-'study', 'research', 
-'report',
-'data literacy']
+data_level1 = ['data',
+ 'data literacy',
+ 'geospatial data',
+ 'household survey',
+ 'information',
+ 'population census',
+ 'record',
+ 'report',
+ 'research',
+ 'statistics',
+ 'study']
 
-data_level2 = ['GDP', 
-'CPI']
+data_level2 = ['CPI', 'GDP', 'GNP', 'HDI', 'WDI']
 
-data_level3 = ['sample size', 
-'regression', 
-'correlation']
+data_level3 = ['correlation', 'regression', 'sample size']
 
 def level1_count(article):
     count_list = []
@@ -81,7 +80,7 @@ def level1_len(count_list):
 
 def create_level1(df):
     traces = []
-    for i in df.columns[1:]:
+    for i in df.columns[1:-1]:
         trace = go.Bar(x=df['Newspaper'], y=df[i], name=i, text=df[i], textposition="outside")
         traces.append(trace)
     data = traces
@@ -90,6 +89,17 @@ def create_level1(df):
     fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h")
     div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div', config={"displayModeBar": False})
     return div
+
+def create_level1_percent(df):
+    trace = go.Bar(orientation='h', y=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
+                   x=df['Level1 %'])
+    data = [trace]
+    fig = go.Figure(data=data)
+    fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h")
+    div = plotly.offline.plot(fig, include_plotlyjs=False,
+                              output_type='div', config={"displayModeBar": False})
+    return div
+
 
 
 @application.route('/')
@@ -121,10 +131,12 @@ def index():
     ['Lokaantar', df_LK.level1_len.sum(), df_LK.shape[0]]
        ] 
     df = pd.DataFrame(data, columns = ['Newspaper', 'Level1', 'News Articles']) 
-    div = create_level1(df)
+    df['Level1 %'] = round(df['Level1']/df['News Articles']*100).map('{:,.0f} %'.format)
+    div1 = create_level1(df)
+    div2 = create_level1_percent(df)
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
-    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div=div,\
-      len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3)
+    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2,\
+      len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum())
 
 @application.route('/getdata')
 def getdata():

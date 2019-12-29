@@ -266,8 +266,8 @@
                 </div>
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-3xl">152 days</h3>
-                <h5 class="font-bold text-gray-500">Dataset Range</h5>
+                <h3 class="font-bold text-3xl">{{total_articles}}</h3>
+                <h5 class="font-bold text-gray-500">Total News Articles</h5>
               </div>
             </div>
           </div>
@@ -286,7 +286,7 @@
               </div>
               <div class="p-5">
                 <div class="ct-chart ct-golden-section">
-                  {{div|safe}}
+                  {{div1|safe}}
                 </div>
               </div>
               <!--/Graph Card-->
@@ -329,10 +329,12 @@
               <!--Graph Card-->
 
               <div class="border-b p-3">
-                <h5 class="font-bold text-black">Graph</h5>
+                <h5 class="font-bold text-black">Level 1 Percentage</h5>
               </div>
               <div class="p-5">
-                <div class="ct-chart ct-golden-section" id="chart2"></div>
+                <div class="ct-chart ct-golden-section">
+                  {{div2|safe}}
+                </div>
               </div>
 
               <!--/Graph Card-->
