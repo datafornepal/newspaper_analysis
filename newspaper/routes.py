@@ -86,16 +86,17 @@ def create_level1(df):
     data = traces
     layout = go.Layout(barmode='group')
     fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h")
+    fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h", margin=dict(t=5,b=5,l=5,r=5))
     div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div', config={"displayModeBar": False})
     return div
 
 def create_level1_percent(df):
-    trace = go.Bar(orientation='h', y=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
-                   x=df['Level1 %'])
+    trace = go.Bar(x=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
+                   y=df['Level1 %'])
     data = [trace]
-    fig = go.Figure(data=data)
-    fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h")
+    layout = go.Layout(barmode='group' , margin=dict(t=5,b=5,l=5,r=5))
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(font=dict(size=9))
     div = plotly.offline.plot(fig, include_plotlyjs=False,
                               output_type='div', config={"displayModeBar": False})
     return div
