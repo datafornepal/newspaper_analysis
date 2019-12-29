@@ -37,21 +37,20 @@ links = [
  '/travel',
  '/world']
 
-data_level1 = ['data',
- 'data literacy',
- 'geospatial data',
- 'household survey',
- 'information',
- 'population census',
- 'record',
- 'report',
- 'research',
- 'statistics',
- 'study']
+data_level1 = [' data ',
+ ' data literacy ',
+ ' geospatial data ',
+ ' household survey ',
+ ' information ',
+ ' population census ',
+ ' record ',
+ ' research ',
+ ' statistics ',
+ ' study ']
 
-data_level2 = ['CPI', 'GDP', 'GNP', 'HDI', 'WDI']
+data_level2 = [' CPI ', ' GDP ', ' GNP ', ' HDI ', ' WDI ']
 
-data_level3 = ['correlation', 'regression', 'sample size']
+data_level3 = [' correlation ', ' regression ', ' sample size ']
 
 def level1_count(article):
     count_list = []
@@ -146,7 +145,8 @@ def index():
     div3 = create_pie_chart(df)
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
     return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3,\
-      len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum())
+      len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
+      level1_keywords=','.join(data_level1), level2_keywords=','.join(data_level2), level3_keywords=','.join(data_level3))
 
 @application.route('/getdata')
 def getdata():
