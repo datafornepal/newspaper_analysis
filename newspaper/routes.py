@@ -60,6 +60,22 @@ def level1_count(article):
             count_list.append({word:word_count})
     return count_list
 
+def level2_count(article):
+    count_list = []
+    for word in data_level2:
+        word_count = article.count(word)
+        if word_count > 0:
+            count_list.append({word:word_count})
+    return count_list
+
+def level3_count(article):
+    count_list = []
+    for word in data_level3:
+        word_count = article.count(word)
+        if word_count > 0:
+            count_list.append({word:word_count})
+    return count_list
+
 
 def cleanHTML(raw_html):
     return BeautifulSoup(raw_html, "lxml").text
@@ -91,7 +107,30 @@ def create_level1(df):
 
 def create_level1_percent(df):
     trace = go.Bar(x=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
-                   y=df['Level1 %'], )
+                   y=df['Level1 %'], marker_color='green')
+    data = [trace]
+    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(font=dict(size=9))
+    div = plotly.offline.plot(fig, include_plotlyjs=False,
+                              output_type='div', config={"displayModeBar": False})
+    return div
+
+
+def create_level2_percent(df):
+    trace = go.Bar(x=df['Newspaper'], text=df['Level2 %'], textposition="outside", 
+                   y=df['Level2 %'], marker_color='indianred')
+    data = [trace]
+    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(font=dict(size=9))
+    div = plotly.offline.plot(fig, include_plotlyjs=False,
+                              output_type='div', config={"displayModeBar": False})
+    return div
+
+def create_level3_percent(df):
+    trace = go.Bar(x=df['Newspaper'], text=df['Level3 %'], textposition="outside", 
+                   y=df['Level3 %'], marker_color='lightsalmon')
     data = [trace]
     layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
     fig = go.Figure(data=data, layout=layout)
@@ -130,7 +169,32 @@ def index():
     df_TN['level1_len'] = df_TN.level1.apply(level1_len)
     df_KT['level1_len'] = df_KT.level1.apply(level1_len)
     df_LK['level1_len'] = df_LK.level1.apply(level1_len)
-    data = [
+    df_HT['level2'] = df_HT.content.apply(level2_count)
+    df_OK['level2'] = df_OK.content.apply(level2_count)
+    df_NT['level2'] = df_NT.content.apply(level2_count)
+    df_TN['level2'] = df_TN.content.apply(level2_count)
+    df_KT['level2'] = df_KT.content.apply(level2_count)
+    df_LK['level2'] = df_LK.content.apply(level2_count)
+    df_HT['level2_len'] = df_HT.level2.apply(level1_len)
+    df_OK['level2_len'] = df_OK.level2.apply(level1_len)
+    df_NT['level2_len'] = df_NT.level2.apply(level1_len)
+    df_TN['level2_len'] = df_TN.level2.apply(level1_len)
+    df_KT['level2_len'] = df_KT.level2.apply(level1_len)
+    df_LK['level2_len'] = df_LK.level2.apply(level1_len)
+    df_HT['level3'] = df_HT.content.apply(level3_count)
+    df_OK['level3'] = df_OK.content.apply(level3_count)
+    df_NT['level3'] = df_NT.content.apply(level3_count)
+    df_TN['level3'] = df_TN.content.apply(level3_count)
+    df_KT['level3'] = df_KT.content.apply(level3_count)
+    df_LK['level3'] = df_LK.content.apply(level3_count)
+    df_HT['level3_len'] = df_HT.level3.apply(level1_len)
+    df_OK['level3_len'] = df_OK.level3.apply(level1_len)
+    df_NT['level3_len'] = df_NT.level3.apply(level1_len)
+    df_TN['level3_len'] = df_TN.level3.apply(level1_len)
+    df_KT['level3_len'] = df_KT.level3.apply(level1_len)
+    df_LK['level3_len'] = df_LK.level3.apply(level1_len)
+
+    data1 = [
     ['The Himalayan Times', df_HT.level1_len.sum(), df_HT.shape[0]],
     ['Online Khabar', df_OK.level1_len.sum(), df_OK.shape[0]],
     ['Nepali Times', df_NT.level1_len.sum(), df_NT.shape[0]],
@@ -138,15 +202,51 @@ def index():
     ['Katmandu Tribune', df_KT.level1_len.sum(), df_KT.shape[0]],
     ['Lokaantar', df_LK.level1_len.sum(), df_LK.shape[0]]
        ] 
-    df = pd.DataFrame(data, columns = ['Newspaper', 'Level1', 'News Articles']) 
+
+    data2 = [
+    ['The Himalayan Times', df_HT.level2_len.sum(), df_HT.shape[0]],
+    ['Online Khabar', df_OK.level2_len.sum(), df_OK.shape[0]],
+    ['Nepali Times', df_NT.level2_len.sum(), df_NT.shape[0]],
+    ['Telegraph Nepal', df_TN.level2_len.sum(), df_TN.shape[0]],
+    ['Katmandu Tribune', df_KT.level2_len.sum(), df_KT.shape[0]],
+    ['Lokaantar', df_LK.level2_len.sum(), df_LK.shape[0]]
+       ] 
+
+    data3 = [
+    ['The Himalayan Times', df_HT.level3_len.sum(), df_HT.shape[0]],
+    ['Online Khabar', df_OK.level3_len.sum(), df_OK.shape[0]],
+    ['Nepali Times', df_NT.level3_len.sum(), df_NT.shape[0]],
+    ['Telegraph Nepal', df_TN.level3_len.sum(), df_TN.shape[0]],
+    ['Katmandu Tribune', df_KT.level3_len.sum(), df_KT.shape[0]],
+    ['Lokaantar', df_LK.level3_len.sum(), df_LK.shape[0]]
+       ] 
+    df = pd.DataFrame(data1, columns = ['Newspaper', 'Level1', 'News Articles']) 
+    df2 = pd.DataFrame(data2, columns = ['Newspaper', 'Level2', 'News Articles']) 
+    df3 = pd.DataFrame(data3, columns = ['Newspaper', 'Level3', 'News Articles']) 
+
     df['Level1 %'] = round(df['Level1']/df['News Articles']*100).map('{:,.0f} %'.format)
+    df2['Level2 %'] = round(df2['Level2']/df2['News Articles']*100).map('{:,.0f} %'.format)
+    df3['Level3 %'] = round(df3['Level3']/df3['News Articles']*100).map('{:,.0f} %'.format)
+
     div1 = create_level1(df)
     div2 = create_level1_percent(df)
     div3 = create_pie_chart(df)
+
+    div4 = create_level1(df2)
+    div5 = create_level2_percent(df2)
+    
+    div6 = create_level1(df3)
+    div7 = create_level3_percent(df3)
+
+
+
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
-    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3,\
+    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3, div4=div4, div5=div5, div6=div6, div7=div7,\
       len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
-      level1_keywords=','.join(data_level1), level2_keywords=','.join(data_level2), level3_keywords=','.join(data_level3))
+      level1_keywords=','.join(data_level1), level2_keywords=','.join(data_level2), level3_keywords=','.join(data_level3),\
+      column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
+      column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist())
+      )
 
 @application.route('/getdata')
 def getdata():

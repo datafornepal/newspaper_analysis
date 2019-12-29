@@ -324,26 +324,62 @@
               </div>
               <div class="p-5">
                 <div class="ct-chart ct-golden-section">
-                  {{div1|safe}}
+                  {{div4|safe}}
                 </div>
               </div>
               <!--/Graph Card-->
                             <!--Table Card-->
               <div class="p-3">
                 <div class="border-b p-3">
-                  <h5 class="font-bold text-black">Level 1 Analysis Table</h5>
+                  <h5 class="font-bold text-black">Level 2 Analysis Table</h5>
                 </div>
                 <div class="p-5">
                   <!-- {% for table in tables %} {{ table|safe }} {% endfor %} -->
                 <table class="table-auto" style="width: 100%;">
                   <thead>
                     <tr>
-                        {% for col in column_names_level1 %}
+                        {% for col in column_names_level2 %}
                         <th class="px-4 py-2">{{col}}</th>
                         {% endfor %}
                     </tr>
                   </thead>
-                    {% for row in row_data_level1 %}
+                    {% for row in row_data_level2 %}
+                    <tr>
+                      {% for r in row %}
+                        <td class="border px-4 py-2">{{r}}</td>
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+
+                </table>
+                </div>
+              </div>
+              <!--/table Card-->
+              <div class="border-b p-3">
+                <h5 class="font-bold text-black">Level 3 Analysis Chart</h5>
+              </div>
+              <div class="p-5">
+                <div class="ct-chart ct-golden-section">
+                  {{div6|safe}}
+                </div>
+              </div>
+              <!--/Graph Card-->
+                            <!--Table Card-->
+              <div class="p-3">
+                <div class="border-b p-3">
+                  <h5 class="font-bold text-black">Level 3 Analysis Table</h5>
+                </div>
+                <div class="p-5">
+                  <!-- {% for table in tables %} {{ table|safe }} {% endfor %} -->
+                <table class="table-auto" style="width: 100%;">
+                  <thead>
+                    <tr>
+                        {% for col in column_names_level3 %}
+                        <th class="px-4 py-2">{{col}}</th>
+                        {% endfor %}
+                    </tr>
+                  </thead>
+                    {% for row in row_data_level3 %}
                     <tr>
                       {% for r in row %}
                         <td class="border px-4 py-2">{{r}}</td>
@@ -374,19 +410,24 @@
                 </div>
               </div>
 
-              <!--/Graph Card-->
-
-              <!--Graph Card-->
               <div class="border-b p-3">
-                <h5 class="font-bold text-black">Graph</h5>
+                <h5 class="font-bold text-black">Level 2 Percentage</h5>
               </div>
               <div class="p-5">
-                <div class="ct-chart ct-golden-section" id="chart3"></div>
+                <div class="ct-chart ct-golden-section">
+                  {{div5|safe}}
+                </div>
               </div>
 
-              <!--/Graph Card-->
+              <div class="border-b p-3">
+                <h5 class="font-bold text-black">Level 3 Percentage</h5>
+              </div>
+              <div class="p-5">
+                <div class="ct-chart ct-golden-section">
+                  {{div7|safe}}
+                </div>
+              </div>
 
-              <!--Graph Card-->
 
               <div class="border-b p-3">
                 <h5 class="font-bold text-black">News Articles Collected</h5>
@@ -402,7 +443,7 @@
               <!--Template Card-->
               <div class="p-3">
                 <div class="border-b p-3">
-                  <h5 class="font-bold text-black">Template</h5>
+                  <h5 class="font-bold text-black">About</h5>
                 </div>
                 <div class="p-5"></div>
               </div>
