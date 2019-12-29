@@ -92,15 +92,23 @@ def create_level1(df):
 
 def create_level1_percent(df):
     trace = go.Bar(x=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
-                   y=df['Level1 %'])
+                   y=df['Level1 %'], )
     data = [trace]
-    layout = go.Layout(barmode='group' , margin=dict(t=5,b=5,l=5,r=5))
+    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
     fig = go.Figure(data=data, layout=layout)
     fig.update_layout(font=dict(size=9))
     div = plotly.offline.plot(fig, include_plotlyjs=False,
                               output_type='div', config={"displayModeBar": False})
     return div
 
+def create_pie_chart(df):
+    data=[go.Pie(labels=df['Newspaper'], values=df['News Articles'], hole=.3)]
+    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(font=dict(size=9), legend=dict(x=-.1, y=1.2), legend_orientation="h")
+    div = plotly.offline.plot(fig, include_plotlyjs=False,
+                              output_type='div', config={"displayModeBar": False})
+    return div
 
 
 @application.route('/')
@@ -135,8 +143,9 @@ def index():
     df['Level1 %'] = round(df['Level1']/df['News Articles']*100).map('{:,.0f} %'.format)
     div1 = create_level1(df)
     div2 = create_level1_percent(df)
+    div3 = create_pie_chart(df)
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
-    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2,\
+    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3,\
       len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum())
 
 @application.route('/getdata')
