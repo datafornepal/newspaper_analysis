@@ -151,12 +151,12 @@ def create_pie_chart(df):
 
 @application.route('/')
 def index():
-    df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv"))))
-    df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv"))))
-    df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv"))))
-    df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv"))))
-    df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv"))))
-    df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv"))))
+    df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv")))).drop_duplicates(['url'], 'first')
     df_HT['level1'] = df_HT.content.apply(level1_count)
     df_OK['level1'] = df_OK.content.apply(level1_count)
     df_NT['level1'] = df_NT.content.apply(level1_count)
