@@ -265,7 +265,14 @@
                      </div>
                      <div class="p-5">
                         <h6 class="text-black">
-                           An indicator model was developed to assess the use and engagement of statistics in Nepali news portals. The model is largely a contextualization  of IASE 2016 Roundtable Paper proposed by Thilo Klein, Anais Galdin and El Iza Mohamedou. The paper argues that the writing of news reporters can be seen as an image for a nation's demand for statistical facts and critical analysis. The data source for the model are Nepali news portals that support RSS feeds and are published in English. The news portals that fit these criterias are The Himalayan Times, Onlinekhabar, Nepali Times, Telegraph Nepal, Kathmandu Tribune and Lokaantar. Starting from the 9th of December 2019, more than 3000 news articles were collected and analysed.
+                          This indicator model is developed to assess the use and engagement of statistics in Nepali news portals. 
+                          The model is largely a contextualization of IASE 2016 Roundtable Paper proposed by Thilo Klein, Anais Galdin 
+                          and El Iza Mohamedou. 
+                          The paper argues that the writing of news reporters can be seen as an image for a nation's demand for 
+                          statistical facts and critical analysis. The data source for the model is Nepali news portals that support
+                           RSS feeds and are published in English. The news portals that fit these criteria are 
+                           The Himalayan Times, Onlinekhabar, Nepali Times, Telegraph Nepal, Kathmandu Tribune and Lokaantar. 
+                           Starting from the 9th of December 2019, more than {{total_articles}} news articles were collected and analysed.
                         </h6>
                      </div>
                      <!--/Graph Card-->
@@ -427,6 +434,21 @@
                      <div class="p-5">
                         <div class="ct-chart ct-golden-section">
                            {{div3|safe}}
+                        </div>
+                     </div>
+                                          <div class="p-3">
+                        <div class="border-b p-3">
+                           <h5 class="font-bold text-black">Limitations and Next Steps</h5>
+                        </div>
+                        <div class="p-5">
+                           <h6 class="text-black">
+                             Several limitations of the model in the context of data collection and analysis methodology have been identified. 
+                             <br />
+                             <br />
+                             First of all, very few Nepali news portals support news categories or webpage based RSS. 
+                             <br />
+                             We found only 6 in English when we searched for RSS between 9th December 2019- 9th January 2020. Besides, the portals that support RSS do not update their feeds on a regular basis. <br /><br />Additionally, the only language medium supported currently is English. The model fails to capture segments of several news portals and a significant population size who consume news in Nepali. The model also makes the assumption that sequence matching and keywords association implies statistical literacy.  This leads to a high rate of false-positives and false-negatives are high. <br /><br />However, there are several plans being envisioned to mitigate these limitations. First and foremost, the data collection process is always ongoing. The backend of this dashboard collects data automatically on a daily basis. This implies, over a period of time, the sample size will be large enough for more accurate results. <br /><br />Similarly, a plan for dialogue with more news portals is in motion to request RSS support. <br /><br />Lastly, to capture the segmentation of population who consume news in Nepali, a research and implementation plan is being developed to update the model to support the language. 
+                             </h6>
                         </div>
                      </div>
                      <!--/Graph Card-->
