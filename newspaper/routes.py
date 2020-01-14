@@ -43,28 +43,6 @@ links = [
  '/travel',
  '/world']
 
-# // TWO WORDS
-# data_level1 = [
-
-#  ' source of data ',
-#  ' data source ',
-#  ' data analysis ',
-#  ' data literacy ',
-#  ' geospatial data ',
-#  ' household survey ', 
-#  ' population census ',
-# ]
-
-# data_level1 = [' data ',
-#  ' data literacy ',
-#  ' geospatial data ',
-#  ' household survey ',
-#  ' information ',
-#  ' population census ',
-#  ' record ',
-#  ' research ',
-#  ' statistics ',
-#  ' study ']
 
 data_level1 = ['arabl land',
  'avail data',
@@ -166,9 +144,87 @@ data_level1 = ['arabl land',
  'water suppli',
  'youth unemploy']
 
-data_level2 = [' CPI ', ' GDP ', ' GNP ', ' HDI ', ' WDI ']
+data_level2=['accur',
+ 'adequ',
+ 'ambigu',
+ 'ambígu',
+ 'apropi',
+ 'bancal',
+ 'bias',
+ 'confiabl',
+ 'correct',
+ 'deceit',
+ 'deceiv',
+ 'decept',
+ 'defectu',
+ 'delud',
+ 'engan',
+ 'equivoc',
+ 'erreur',
+ 'erro',
+ 'erron',
+ 'errone',
+ 'error',
+ 'exact',
+ 'exat',
+ 'fake',
+ 'fallaci',
+ 'faux',
+ 'fiabl',
+ 'generaliz',
+ 'illus',
+ 'imparcial',
+ 'impartial',
+ 'imprecis',
+ 'improp',
+ 'inaccur',
+ 'incorrect',
+ 'inexact',
+ 'invalid',
+ 'limit',
+ 'manipul',
+ 'mislead',
+ 'mistaken',
+ 'parcial',
+ 'prec',
+ 'precis',
+ 'proper',
+ 'reliabl',
+ 'rigor',
+ 'rigour',
+ 'scientif',
+ 'sol',
+ 'solid',
+ 'som',
+ 'son',
+ 'sound',
+ 'spurious',
+ 'tromp',
+ 'trompeur',
+ 'unbias',
+ 'unreli',
+ 'unscientif',
+ 'unsound',
+ 'vag',
+ 'vagu',
+ 'val',
+ 'valid',
+ ]
 
-data_level3 = [' correlation ', ' regression ', ' sample size ']
+data_level3 = ['data manipul',
+ 'lead question',
+ 'manipul dat',
+ 'report bias',
+ 'sampl select',
+ 'sampl size']
+
+data_level_indicator = [' cpi ', ' fdi ', ' gdp ', ' gnp ', ' hdi ', ' wdi ']
+
+filter_list = [' data ',
+ ' record ',
+ ' research ',
+ ' statistics ',
+ ' study ']
 
 def level1_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 
@@ -184,25 +240,50 @@ def level1_count(article):
         search_ = (r"\b"+word.split()[0]+r"[a-zA-Z]*\s\b"+word.split()[1]+"[a-zA-Z]*")
         if re.search(search_, article):
             keyword_list.append(word)
+    for word in data_level_indicator:
+        if (word in article):
+            keyword_list.append(word)
+    return keyword_list
+
+def level2_count(article):
+    word_tokens = word_tokenize(article.lower().rstrip()) 
+    filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+    
+    for w in word_tokens: 
+        if w not in stop_words: 
+            filtered_sentence.append(w) 
+
+    article = ' '.join(filtered_sentence)  
+    keyword_list = []
+    for word in data_level2:
+        search_ = (r"\b"+word+r"[a-zA-Z]*")
+        if re.search(search_, article):
+            keyword_list.append(word)
+    return keyword_list
+
+def level3_count(article):
+    word_tokens = word_tokenize(article.lower().rstrip()) 
+    filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+    
+    for w in word_tokens: 
+        if w not in stop_words: 
+            filtered_sentence.append(w) 
+
+    article = ' '.join(filtered_sentence)  
+    keyword_list = []
+    for word in data_level3:
+        search_ = (r"\b"+word+r"[a-zA-Z]*")
+        if re.search(search_, article):
+            keyword_list.append(word)
     return keyword_list
 
 
-def level2_count(article):
-    count_list = []
-    for word in data_level2:
-        word_count = article.count(word)
-        if word_count > 0:
-            count_list.append({word:word_count})
-    return count_list
-
-def level3_count(article):
-    count_list = []
-    for word in data_level3:
-        word_count = article.count(word)
-        if word_count > 0:
-            count_list.append({word:word_count})
-    return count_list
-
+def level_2_3_filter(article):
+    article = article.lower().rstrip()
+    for word in filter_list:
+        if word in article:
+            return 1
+    return 0
 
 def cleanHTML(raw_html):
     return BeautifulSoup(raw_html, "lxml").text
@@ -218,7 +299,7 @@ def performRSS(url, categories):
     return all_links
 
 def level1_len(count_list):
-    return len(count_list)
+    return 1 if len(count_list)>0 else 0
 
 def create_level1(df):
     traces = []
@@ -278,48 +359,67 @@ def create_pie_chart(df):
 
 @application.route('/')
 def index():
-    df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv")))).drop_duplicates(['url'], 'first')
-    df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv")))).drop_duplicates(['url'], 'first')
-    df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv")))).drop_duplicates(['url'], 'first')
-    df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv")))).drop_duplicates(['url'], 'first')
-    df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv")))).drop_duplicates(['url'], 'first')
-    df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv")))).drop_duplicates(['url'], 'first')
+    df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+    
     df_HT['level1'] = df_HT.content.apply(level1_count)
     df_OK['level1'] = df_OK.content.apply(level1_count)
     df_NT['level1'] = df_NT.content.apply(level1_count)
     df_TN['level1'] = df_TN.content.apply(level1_count)
     df_KT['level1'] = df_KT.content.apply(level1_count)
     df_LK['level1'] = df_LK.content.apply(level1_count)
+
     df_HT['level1_len'] = df_HT.level1.apply(level1_len)
     df_OK['level1_len'] = df_OK.level1.apply(level1_len)
     df_NT['level1_len'] = df_NT.level1.apply(level1_len)
     df_TN['level1_len'] = df_TN.level1.apply(level1_len)
     df_KT['level1_len'] = df_KT.level1.apply(level1_len)
     df_LK['level1_len'] = df_LK.level1.apply(level1_len)
-    df_HT['level2'] = df_HT.content.apply(level2_count)
-    df_OK['level2'] = df_OK.content.apply(level2_count)
-    df_NT['level2'] = df_NT.content.apply(level2_count)
-    df_TN['level2'] = df_TN.content.apply(level2_count)
-    df_KT['level2'] = df_KT.content.apply(level2_count)
-    df_LK['level2'] = df_LK.content.apply(level2_count)
-    df_HT['level2_len'] = df_HT.level2.apply(level1_len)
-    df_OK['level2_len'] = df_OK.level2.apply(level1_len)
-    df_NT['level2_len'] = df_NT.level2.apply(level1_len)
-    df_TN['level2_len'] = df_TN.level2.apply(level1_len)
-    df_KT['level2_len'] = df_KT.level2.apply(level1_len)
-    df_LK['level2_len'] = df_LK.level2.apply(level1_len)
-    df_HT['level3'] = df_HT.content.apply(level3_count)
-    df_OK['level3'] = df_OK.content.apply(level3_count)
-    df_NT['level3'] = df_NT.content.apply(level3_count)
-    df_TN['level3'] = df_TN.content.apply(level3_count)
-    df_KT['level3'] = df_KT.content.apply(level3_count)
-    df_LK['level3'] = df_LK.content.apply(level3_count)
-    df_HT['level3_len'] = df_HT.level3.apply(level1_len)
-    df_OK['level3_len'] = df_OK.level3.apply(level1_len)
-    df_NT['level3_len'] = df_NT.level3.apply(level1_len)
-    df_TN['level3_len'] = df_TN.level3.apply(level1_len)
-    df_KT['level3_len'] = df_KT.level3.apply(level1_len)
-    df_LK['level3_len'] = df_LK.level3.apply(level1_len)
+
+    df_HT['level_2_3_valid'] = df_HT.content.apply(level_2_3_filter)
+    df_HT_level_2_3 = df_HT[df_HT['level_2_3_valid']==1].reset_index(drop=True)
+    df_OK['level_2_3_valid'] = df_OK.content.apply(level_2_3_filter)
+    df_OK_level_2_3 = df_OK[df_OK['level_2_3_valid']==1].reset_index(drop=True)
+    df_NT['level_2_3_valid'] = df_NT.content.apply(level_2_3_filter)
+    df_NT_level_2_3 = df_NT[df_NT['level_2_3_valid']==1].reset_index(drop=True)
+    df_TN['level_2_3_valid'] = df_TN.content.apply(level_2_3_filter)
+    df_TN_level_2_3 = df_TN[df_TN['level_2_3_valid']==1].reset_index(drop=True)
+    df_KT['level_2_3_valid'] = df_KT.content.apply(level_2_3_filter)
+    df_KT_level_2_3 = df_KT[df_KT['level_2_3_valid']==1].reset_index(drop=True)
+    df_LK['level_2_3_valid'] = df_LK.content.apply(level_2_3_filter)
+    df_LK_level_2_3 = df_LK[df_LK['level_2_3_valid']==1].reset_index(drop=True)
+
+    df_HT_level_2_3['level2'] = df_HT_level_2_3.content.apply(level2_count)
+    df_OK_level_2_3['level2'] = df_OK_level_2_3.content.apply(level2_count)
+    df_NT_level_2_3['level2'] = df_NT_level_2_3.content.apply(level2_count)
+    df_TN_level_2_3['level2'] = df_TN_level_2_3.content.apply(level2_count)
+    df_KT_level_2_3['level2'] = df_KT_level_2_3.content.apply(level2_count)
+    df_LK_level_2_3['level2'] = df_LK_level_2_3.content.apply(level2_count)
+
+    df_HT_level_2_3['level2_len'] = df_HT_level_2_3.level2.apply(level1_len)
+    df_OK_level_2_3['level2_len'] = df_OK_level_2_3.level2.apply(level1_len)
+    df_NT_level_2_3['level2_len'] = df_NT_level_2_3.level2.apply(level1_len)
+    df_TN_level_2_3['level2_len'] = df_TN_level_2_3.level2.apply(level1_len)
+    df_KT_level_2_3['level2_len'] = df_KT_level_2_3.level2.apply(level1_len)
+    df_LK_level_2_3['level2_len'] = df_LK_level_2_3.level2.apply(level1_len)
+
+    df_HT_level_2_3['level3'] = df_HT_level_2_3.content.apply(level3_count)
+    df_OK_level_2_3['level3'] = df_OK_level_2_3.content.apply(level3_count)
+    df_NT_level_2_3['level3'] = df_NT_level_2_3.content.apply(level3_count)
+    df_TN_level_2_3['level3'] = df_TN_level_2_3.content.apply(level3_count)
+    df_KT_level_2_3['level3'] = df_KT_level_2_3.content.apply(level3_count)
+    df_LK_level_2_3['level3'] = df_LK_level_2_3.content.apply(level3_count)
+
+    df_HT_level_2_3['level3_len'] = df_HT_level_2_3.level3.apply(level1_len)
+    df_OK_level_2_3['level3_len'] = df_OK_level_2_3.level3.apply(level1_len)
+    df_NT_level_2_3['level3_len'] = df_NT_level_2_3.level3.apply(level1_len)
+    df_TN_level_2_3['level3_len'] = df_TN_level_2_3.level3.apply(level1_len)
+    df_KT_level_2_3['level3_len'] = df_KT_level_2_3.level3.apply(level1_len)
+    df_LK_level_2_3['level3_len'] = df_LK_level_2_3.level3.apply(level1_len)
 
     data1 = [
     ['The Himalayan Times', df_HT.level1_len.sum(), df_HT.shape[0]],
@@ -331,22 +431,24 @@ def index():
        ] 
 
     data2 = [
-    ['The Himalayan Times', df_HT.level2_len.sum(), df_HT.shape[0]],
-    ['Online Khabar', df_OK.level2_len.sum(), df_OK.shape[0]],
-    ['Nepali Times', df_NT.level2_len.sum(), df_NT.shape[0]],
-    ['Telegraph Nepal', df_TN.level2_len.sum(), df_TN.shape[0]],
-    ['Katmandu Tribune', df_KT.level2_len.sum(), df_KT.shape[0]],
-    ['Lokaantar', df_LK.level2_len.sum(), df_LK.shape[0]]
+    ['The Himalayan Times', df_HT_level_2_3.level2_len.sum(), df_HT_level_2_3.shape[0]],
+    ['Online Khabar', df_OK_level_2_3.level2_len.sum(), df_OK_level_2_3.shape[0]],
+    ['Nepali Times', df_NT_level_2_3.level2_len.sum(), df_NT_level_2_3.shape[0]],
+    ['Telegraph Nepal', df_TN_level_2_3.level2_len.sum(), df_TN_level_2_3.shape[0]],
+    ['Katmandu Tribune', df_KT_level_2_3.level2_len.sum(), df_KT_level_2_3.shape[0]],
+    ['Lokaantar', df_LK_level_2_3.level2_len.sum(), df_LK_level_2_3.shape[0]]
        ] 
 
+
     data3 = [
-    ['The Himalayan Times', df_HT.level3_len.sum(), df_HT.shape[0]],
-    ['Online Khabar', df_OK.level3_len.sum(), df_OK.shape[0]],
-    ['Nepali Times', df_NT.level3_len.sum(), df_NT.shape[0]],
-    ['Telegraph Nepal', df_TN.level3_len.sum(), df_TN.shape[0]],
-    ['Katmandu Tribune', df_KT.level3_len.sum(), df_KT.shape[0]],
-    ['Lokaantar', df_LK.level3_len.sum(), df_LK.shape[0]]
+    ['The Himalayan Times', df_HT_level_2_3.level3_len.sum(), df_HT_level_2_3.shape[0]],
+    ['Online Khabar', df_OK_level_2_3.level3_len.sum(), df_OK_level_2_3.shape[0]],
+    ['Nepali Times', df_NT_level_2_3.level3_len.sum(), df_NT_level_2_3.shape[0]],
+    ['Telegraph Nepal', df_TN_level_2_3.level3_len.sum(), df_TN_level_2_3.shape[0]],
+    ['Katmandu Tribune', df_KT_level_2_3.level3_len.sum(), df_KT_level_2_3.shape[0]],
+    ['Lokaantar', df_LK_level_2_3.level3_len.sum(), df_LK_level_2_3.shape[0]]
        ] 
+
     df = pd.DataFrame(data1, columns = ['Newspaper', 'Level1', 'News Articles']) 
     df2 = pd.DataFrame(data2, columns = ['Newspaper', 'Level2', 'News Articles']) 
     df3 = pd.DataFrame(data3, columns = ['Newspaper', 'Level3', 'News Articles']) 
@@ -365,12 +467,10 @@ def index():
     div6 = create_level1(df3)
     div7 = create_level3_percent(df3)
 
-
-
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
+
     return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3, div4=div4, div5=div5, div6=div6, div7=div7,\
       len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
-      level1_keywords=','.join(data_level1), level2_keywords=','.join(data_level2), level3_keywords=','.join(data_level3),\
       column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
       column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist())
       )
