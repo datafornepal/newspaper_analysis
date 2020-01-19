@@ -17,8 +17,6 @@ def performRSS(url, categories):
             all_links.append(temp_dict)        
     return all_links
 
-
-
 def fetch_data():    
     today = date.today().strftime("%b-%d-%Y")
     himalayan_times_url = "https://thehimalayantimes.com/category{}/feed/"
