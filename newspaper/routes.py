@@ -1,39 +1,16 @@
 from flask import render_template, request
 from newspaper import application
-import feedparser
 import pandas as pd
-from bs4 import BeautifulSoup
 from datetime import date
 import glob, os
 import plotly
 import plotly.graph_objects as go
-from newspaper.levels import level1_count,level_2_3_count,level_2_3_filter,level_len,data_level1, data_level2,data_level3,data_level_indicator,filter_list
-# import re
-# from nltk.corpus import stopwords 
-# from nltk.tokenize import word_tokenize 
-
-
-# stop_words = set(stopwords.words('english')) 
-
-links=['/about-town','/analysis','/business','/commentary','/current_affairs','/editorial','/editorials','/education','/entertainment','/finance','/governance','/headline','/here-now','/international','/interview','/kathmandu','/latest','/lifestyle','/multimedia','/national','/nepal','/opinion','/political','/science-technology','/sports','/travel','/world']
-
-
-def cleanHTML(raw_html):
-    return BeautifulSoup(raw_html, "lxml").text
-
-def performRSS(url, categories):
-    all_links = []
-    for category in categories:
-        NewsFeed = feedparser.parse(url.format(category))
-        entries = NewsFeed.entries
-        for entry in entries:
-            temp_dict = {'url': entry.link, 'content': cleanHTML(entry.content[0].value), 'category': category, 'published_date':entry.published}
-            all_links.append(temp_dict)        
-    return all_links
+from newspaper.levels import level1_count,level_2_3_count,level_2_3_filter,level_len,data_level1, data_level2,data_level3
+from newspaper.fetch_data import fetch_data
 
 
 
-def create_level1(df):
+def create_level(df):
     traces = []
     for i in df.columns[1:-1]:
         trace = go.Bar(x=df['Newspaper'], y=df[i], name=i, text=df[i], textposition="outside")
@@ -45,32 +22,9 @@ def create_level1(df):
     div = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div', config={"displayModeBar": False})
     return div
 
-def create_level1_percent(df):
-    trace = go.Bar(x=df['Newspaper'], text=df['Level1 %'], textposition="outside", 
-                   y=df['Level1 %'], marker_color='green')
-    data = [trace]
-    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(font=dict(size=9))
-    div = plotly.offline.plot(fig, include_plotlyjs=False,
-                              output_type='div', config={"displayModeBar": False})
-    return div
-
-
-def create_level2_percent(df):
-    trace = go.Bar(x=df['Newspaper'], text=df['Level2 %'], textposition="outside", 
-                   y=df['Level2 %'], marker_color='indianred')
-    data = [trace]
-    layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(font=dict(size=9))
-    div = plotly.offline.plot(fig, include_plotlyjs=False,
-                              output_type='div', config={"displayModeBar": False})
-    return div
-
-def create_level3_percent(df):
-    trace = go.Bar(x=df['Newspaper'], text=df['Level3 %'], textposition="outside", 
-                   y=df['Level3 %'], marker_color='lightsalmon')
+def create_level_percent(df,color):
+    trace = go.Bar(x=df['Newspaper'], text=df.iloc[:,-1], textposition="outside", 
+                   y=df.iloc[:,-1], marker_color=color)
     data = [trace]
     layout = go.Layout(margin=dict(t=5,b=5,l=5,r=5))
     fig = go.Figure(data=data, layout=layout)
@@ -89,12 +43,12 @@ def create_pie_chart(df):
     return div
 
 
-df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
-df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
-df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
-df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
-df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
-df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv")))).drop_duplicates(['url'], 'first').dropna()
+df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
+df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
+df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
+df_TN = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/TN', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
+df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/KT', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
+df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
 df_HT['level1'] = df_HT.content.apply(level1_count)
 df_OK['level1'] = df_OK.content.apply(level1_count)
 df_NT['level1'] = df_NT.content.apply(level1_count)
@@ -192,15 +146,15 @@ def index():
     df2['Level2 %'] = round(df2['Level2']/df2['News Articles']*100).map('{:,.0f} %'.format)
     df3['Level3 %'] = round(df3['Level3']/df3['News Articles']*100).map('{:,.0f} %'.format)
 
-    div1 = create_level1(df)
-    div2 = create_level1_percent(df)
+    div1 = create_level(df)
+    div2 = create_level_percent(df,color='green')
     div3 = create_pie_chart(df)
 
-    div4 = create_level1(df2)
-    div5 = create_level2_percent(df2)
+    div4 = create_level(df2)
+    div5 = create_level_percent(df2,color='indianred')
     
-    div6 = create_level1(df3)
-    div7 = create_level3_percent(df3)
+    div6 = create_level(df3)
+    div7 = create_level_percent(df3,color='lightsalmon')
 
     len_data_level_1, len_data_level_2, len_data_level_3 = len(data_level1), len(data_level2), len(data_level3)
 
@@ -212,30 +166,6 @@ def index():
 
 @application.route('/getdata')
 def getdata():
-    today = date.today().strftime("%b-%d-%Y")
-    himalayan_times_url = "https://thehimalayantimes.com/category{}/feed/"
-    raw_HT = performRSS(himalayan_times_url, links)
-    df_HT = pd.DataFrame(raw_HT).drop_duplicates()
-    df_HT.to_csv('newspaper/static/datasets/HT/'+today+'.csv')
-    online_khabar_url = "https://english.onlinekhabar.com/category{}/feed/"
-    raw_OK = performRSS(online_khabar_url, links)
-    df_OK = pd.DataFrame(raw_OK).drop_duplicates()
-    df_OK.to_csv('newspaper/static/datasets/OK/'+today+'.csv') 
-    nepali_times_url = "https://www.nepalitimes.com/nt{}/feed/"
-    raw_NT = performRSS(nepali_times_url, links)
-    df_NT = pd.DataFrame(raw_NT).drop_duplicates()
-    df_NT.to_csv('newspaper/static/datasets/NT/'+today+'.csv') 
-    telegraph_nepal_url = "http://telegraphnepal.com/category{}/feed/"
-    raw_TN = performRSS(telegraph_nepal_url, links)
-    df_TN = pd.DataFrame(raw_TN).drop_duplicates()
-    df_TN.to_csv('newspaper/static/datasets/TN/'+today+'.csv') 
-    kathmandu_tribune_url = "https://kathmandutribune.com/category{}/feed/"
-    raw_KT = performRSS(kathmandu_tribune_url, links)
-    df_KT = pd.DataFrame(raw_KT).drop_duplicates()
-    df_KT.to_csv('newspaper/static/datasets/KT/'+today+'.csv') 
-    lokaantar_url = "http://english.lokaantar.com/category{}/feed/"
-    raw_LK = performRSS(lokaantar_url, links)
-    df_LK = pd.DataFrame(raw_LK).drop_duplicates()
-    df_LK.to_csv('newspaper/static/datasets/LK/'+today+'.csv') 
+    fetch_data()
     return ('done')
 
