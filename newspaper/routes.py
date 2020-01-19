@@ -231,10 +231,6 @@ def level1_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 
     filtered_sentence = [w for w in word_tokens if not w in stop_words] 
     
-    for w in word_tokens: 
-        if w not in stop_words: 
-            filtered_sentence.append(w) 
-
     article = ' '.join(filtered_sentence)  
     keyword_list = []
     for word in data_level1:
@@ -250,9 +246,6 @@ def level2_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 
     filtered_sentence = [w for w in word_tokens if not w in stop_words] 
     
-    for w in word_tokens: 
-        if w not in stop_words: 
-            filtered_sentence.append(w) 
 
     article = ' '.join(filtered_sentence)  
     keyword_list = []
@@ -266,9 +259,6 @@ def level3_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 
     filtered_sentence = [w for w in word_tokens if not w in stop_words] 
     
-    for w in word_tokens: 
-        if w not in stop_words: 
-            filtered_sentence.append(w) 
 
     article = ' '.join(filtered_sentence)  
     keyword_list = []
