@@ -2,14 +2,14 @@ from flask import render_template, request
 from newspaper import application
 import pandas as pd
 from newspaper.levels import data_level1, data_level2,data_level3
-from newspaper.prepare_dataframe import prepare_dataframe
+from newspaper.prepare_dataframe import data1, data2, data3
 from newspaper.fetch_data import fetch_data
-from newspaper.level_chart import create_level,create_level_percent,create_pie_chart
+from newspaper.level_chart import create_level, create_level_percent, create_pie_chart
 
 
 @application.route('/')
 def index():
-    data1,data2,data3=prepare_dataframe()
+    
     df = pd.DataFrame(data1, columns = ['Newspaper', 'Level1', 'News Articles']) 
     df2 = pd.DataFrame(data2, columns = ['Newspaper', 'Level2', 'News Articles']) 
     df3 = pd.DataFrame(data3, columns = ['Newspaper', 'Level3', 'News Articles']) 
