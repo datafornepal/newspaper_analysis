@@ -1,34 +1,41 @@
-# Readme
-Installation and Configuration
+#  Data in News
+##  Installation  and  Configuration
+
+**Make  directory  called  newspaper_analysis.**
 
 
-1. Create a directory named newspaper. 
-        mkdir newspaper
-2. Get in the directory 
-        cd newspaper
-3. Clone this repo. 
-          git clone {repo_url}
-4. Create a virtual environment inside the folder 
-          python -m venv env  
-5. Activate the virtual environment 
-        . env/bin/activate  [MAC/LINUX]
-        . env/scripts/activate   [Windows]
-6. Install all dependencies 
-        pip install -r “requirements.txt”
-7. Run flask 
-        export FLASK_APP=”run.py”
-        flask run
-8.  Sometimes, the project may not run. This is because nltk library is missing. To install it open terminal 
-        import nltk 
-        nltk.download()
+    $  mkdir  newspaper_analysis
+
+**cd into  newspaper_analysis**
 
 
+    $  cd  newspaper_analysis
 
-         
-    
+**Clone  this  repository.**
+
+    $  git  clone  {url}  newspaper_analysis
 
 
+**Make** `**virtualenv**` **for  this  repo.**
 
+Inside your newspaper_analysis directory
 
-    
+    $  virtualenv  --python=`which  python` env
+    $  .env/bin/activate (Linux/ Mac)
+    $  .env/scripts/activate (Linux/ Mac)
 
+**Install  all  the  dependencies.**
+
+    (env)  $  cd  newspaper_analysis
+    (env)  $  pip  install  -r  requirements.txt
+
+**Run  the  project**
+
+    (newspaper_analysis)  $  export flask_app = "run.py"
+    (newspaper_analysis)  $  flask run
+
+##  AWS  Configurations
+
+    WSGIPath:  run.py  
+
+    Static  Directory:  newspaper_analysis/static/
