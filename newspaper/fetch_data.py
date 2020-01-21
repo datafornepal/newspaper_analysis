@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import feedparser
+from datetime import date
+import pandas as pd
 
 
 links=['/about-town','/analysis','/business','/commentary','/current_affairs','/editorial','/editorials','/education','/entertainment','/finance','/governance','/headline','/here-now','/international','/interview','/kathmandu','/latest','/lifestyle','/multimedia','/national','/nepal','/opinion','/political','/science-technology','/sports','/travel','/world']
@@ -43,3 +45,4 @@ def fetch_data():
     raw_LK = performRSS(lokaantar_url, links)
     df_LK = pd.DataFrame(raw_LK).drop_duplicates()
     df_LK.to_csv('newspaper/static/datasets/LK/'+today+'.csv') 
+    return True

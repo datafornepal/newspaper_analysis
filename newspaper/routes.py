@@ -40,4 +40,3 @@ def index():
 def getdata():
     fetch_data()
     return ('done')
-
