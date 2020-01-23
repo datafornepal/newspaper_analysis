@@ -10,12 +10,12 @@ df_KT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/data
 df_LK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/LK', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
 
 # Run this once in a while to optimize speed and space
-# df_HT.to_csv('newspaper/static/datasets/ht_jan_21.csv')
-# df_OK.to_csv('newspaper/static/datasets/ok_jan_21.csv')
-# df_NT.to_csv('newspaper/static/datasets/nt_jan_21.csv')
-# df_TN.to_csv('newspaper/static/datasets/tn_jan_21.csv')
-# df_KT.to_csv('newspaper/static/datasets/kt_jan_21.csv')
-# df_LK.to_csv('newspaper/static/datasets/lk_jan_21.csv')
+# df_HT.to_csv('newspaper/static/datasets/ht_jan_21.csv', index=False)
+# df_OK.to_csv('newspaper/static/datasets/ok_jan_21.csv', index=False)
+# df_NT.to_csv('newspaper/static/datasets/nt_jan_21.csv', index=False)
+# df_TN.to_csv('newspaper/static/datasets/tn_jan_21.csv', index=False)
+# df_KT.to_csv('newspaper/static/datasets/kt_jan_21.csv', index=False)
+# df_LK.to_csv('newspaper/static/datasets/lk_jan_21.csv', index=False)
 
 
 df_HT['level1'] = df_HT['content'].apply(level1_count)
