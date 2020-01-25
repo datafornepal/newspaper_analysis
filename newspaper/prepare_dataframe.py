@@ -2,6 +2,11 @@ import glob, os
 import pandas as pd
 from newspaper.levels import level1_count,level_2_3_count,level_2_3_filter,level_len, data_level2,data_level3
 
+# TODO
+# Change 6 dataframes to 1 dataframes
+# This will replace 12 dataframes to 2 dataframes
+# Some other type of analysis like bucket analysis will be possible
+
 df_HT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/HT', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
 df_OK = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/OK', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
 df_NT = pd.concat(map(pd.read_csv, glob.glob(os.path.join('newspaper/static/datasets/NT', "*.csv"))),sort=False).drop_duplicates(['url'], 'first').dropna()
