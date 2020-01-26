@@ -45,4 +45,4 @@ def fetch_data():
     raw_LK = performRSS(lokaantar_url, links)
     df_LK = pd.DataFrame(raw_LK).drop_duplicates()
     df_LK.to_csv('newspaper/static/datasets/LK/'+today+'.csv', index=False) 
-    return True
+    return "done"

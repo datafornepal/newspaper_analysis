@@ -3,7 +3,6 @@ from newspaper import application
 import pandas as pd
 from newspaper.levels import data_level1, data_level2,data_level3
 from newspaper.prepare_dataframe import data1, data2, data3
-from newspaper.fetch_data import fetch_data
 from newspaper.level_chart import create_level, create_level_percent, create_pie_chart
 
 
@@ -36,7 +35,3 @@ def index():
       column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist())
       )
 
-@application.route('/getdata')
-def getdata():
-    fetch_data()
-    return ('done')
