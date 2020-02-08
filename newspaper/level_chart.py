@@ -2,7 +2,6 @@ import pandas as pd
 import plotly
 import plotly.graph_objects as go
 
-
 def create_level(df):
     traces = []
     for i in df.columns[1:-1]:
