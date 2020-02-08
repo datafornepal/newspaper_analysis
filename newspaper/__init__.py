@@ -16,7 +16,8 @@ load_dotenv(dotenv_path)
 
 # Secret key for form
 application.config['SECRET_KEY'] = environ.get('SECRET_KEY')
-
+application.config['BASIC_AUTH_USERNAME'] = environ.get('BASIC_AUTH_USERNAME')
+application.config['BASIC_AUTH_PASSWORD'] = environ.get('BASIC_AUTH_PASSWORD')
 
 from newspaper import routes
 
