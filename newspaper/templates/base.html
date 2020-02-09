@@ -17,13 +17,13 @@
       rel="stylesheet"
       href="{{ url_for('static', filename = 'css/tabs.css') }}"
     />
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script
       src="https://kit.fontawesome.com/7dc3015a44.js"
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body style="background-color: #f14668;">
     <nav class="navbar is-danger">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
@@ -73,6 +73,8 @@
           </li>
         </ul>
       </div>
+    </section>
+    <div class="container">
       <div class="tab-content">
         <div class="tab-pane is-active" id="pane-1">
           <div class="content">
@@ -141,9 +143,105 @@
             <script src="https://gist.github.com/datafornepal/582c3c77566f92d4c03fb755a76edea6.js"></script>
           </div>
         </div>
-        <div class="tab-pane" id="pane-2"></div>
-        <div class="tab-pane" id="pane-3"></div>
-        <div class="tab-pane" id="pane-4"></div>
+        <div class="tab-pane" id="pane-2">
+          <div class="content">
+             <h1 class="has-text-primary">LEVEL 1 RESULTS</h1>
+             <div class="columns">
+                <div class="column">
+                     {{div1|safe}}
+                </div>
+               <div class="column">
+                     {{div2|safe}}
+               </div>
+             </div> 
+             <table class="table">
+               <thead>
+                  <tr>
+                     {% for c in column_names_level1 %}
+                        <th>
+                           {{c}}
+                        </th>
+                     {% endfor %}
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for row in row_data_level1 %}
+                  <tr>
+                  {% for r in row %} 
+                  <td>{{ r }}</td>
+                  {% endfor %}
+                  </tr>
+                  {% endfor %}
+               </tbody>
+             </table>
+          </div>
+        </div>
+        <div class="tab-pane" id="pane-3">
+            <div class="content">
+             <h1 class="has-text-primary">LEVEL 2 RESULTS</h1>
+             <div class="columns">
+                <div class="column">
+                     {{div4|safe}}
+                </div>
+               <div class="column">
+                     {{div5|safe}}
+               </div>
+             </div> 
+             <table class="table">
+               <thead>
+                  <tr>
+                     {% for c in column_names_level2 %}
+                        <th>
+                           {{c}}
+                        </th>
+                     {% endfor %}
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for row in row_data_level2 %}
+                  <tr>
+                  {% for r in row %} 
+                  <td>{{ r }}</td>
+                  {% endfor %}
+                  </tr>
+                  {% endfor %}
+               </tbody>
+             </table>
+          </div>
+        </div>
+        <div class="tab-pane" id="pane-4">
+            <div class="content">
+             <h1 class="has-text-primary">LEVEL 1 RESULTS</h1>
+             <div class="columns">
+                <div class="column">
+                     {{div6|safe}}
+                </div>
+               <div class="column">
+                     {{div7|safe}}
+               </div>
+             </div> 
+             <table class="table">
+               <thead>
+                  <tr>
+                     {% for c in column_names_level3 %}
+                        <th>
+                           {{c}}
+                        </th>
+                     {% endfor %}
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for row in row_data_level3 %}
+                  <tr>
+                  {% for r in row %} 
+                  <td>{{ r }}</td>
+                  {% endfor %}
+                  </tr>
+                  {% endfor %}
+               </tbody>
+             </table>
+          </div>
+        </div>
         <div class="tab-pane" id="pane-5">
           <div class="content">
             <h1 class="has-text-primary">LIMITATIONS AND NEXT STEPS</h1>
@@ -173,6 +271,7 @@
               support the language.
             </p>
           </div>
+        </div>
         </div>
       </div>
       <footer class="footer"></footer>
