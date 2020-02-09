@@ -39,7 +39,8 @@ def index():
 
     len_data_level_1, len_data_level_2, len_data_level_3 = lengths_of_keywords()
 
-    return render_template('index.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3, div4=div4, div5=div5, div6=div6, div7=div7,\
+
+    return render_template('base.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), div1=div1, div2=div2, div3=div3, div4=div4, div5=div5, div6=div6, div7=div7,\
       len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
       column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
       column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist())
@@ -63,7 +64,7 @@ def get_random_df():
 def set_random_df():
     df = pd.DataFrame(np.random.randint(0, 1000, size=(10, 4)), columns=list('ABCD'))
     df.to_csv('newspaper/static/datasets/scheduler_test.csv', index=False)
-    return 'done'
+    return 'done' 
 
 
 # This route is created so that in cases of emergencies
