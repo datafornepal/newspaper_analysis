@@ -19,6 +19,7 @@ sched_daily = BackgroundScheduler(daemon=True)
 
 @application.route('/')
 def index():
+
     df = pd.read_csv('newspaper/static/datasets/level1.csv')
     df2 = pd.read_csv('newspaper/static/datasets/level2.csv')
     df3 = pd.read_csv('newspaper/static/datasets/level3.csv')

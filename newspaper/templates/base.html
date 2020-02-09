@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Bulma - Tabs</title>
+    <title>DATA IN NEWS</title>
     <link
       rel="shortcut icon"
       href="../images/fav_icon.png"
@@ -24,122 +24,31 @@
     ></script>
   </head>
   <body>
-    <nav class="navbar is-info">
+    <nav class="navbar is-danger">
       <div class="navbar-brand">
-        <a class="navbar-item" href="#">
+        <a class="navbar-item" href="/">
           <img
-            src="https://bulma.io/images/bulma-logo.png"
+            src="{{ url_for('static', filename = 'img/logo.png') }}"
             alt="Bulma: a modern CSS framework based on Flexbox"
             width="112"
             height="28"
           />
         </a>
-        <div
-          class="navbar-burger burger"
-          data-target="navbarExampleTransparentExample"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div id="navbarExampleTransparentExample" class="navbar-menu">
-        <div class="navbar-start is-link">
-          <a
-            class="navbar-item"
-            href="https://github.com/BulmaTemplates/bulma-templates"
-          >
-            Home
-          </a>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="/documentation/overview/start/">
-              Docs
-            </a>
-            <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item" href="admin.html">
-                Admin
-              </a>
-              <a class="navbar-item" href="forum.html">
-                Forum
-              </a>
-              <a class="navbar-item" href="cover.html">
-                Cover
-              </a>
-              <a class="navbar-item" href="cards.html">
-                Cards
-              </a>
-              <a class="navbar-item" href="blog.html">
-                Blog
-              </a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item" href="search.html">
-                Search
-              </a>
-              <a class="navbar-item is-active" href="kanban.html">
-                Kanban
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a
-                  class="bd-tw-button button"
-                  data-social-network="Twitter"
-                  data-social-action="tweet"
-                  data-social-target="#"
-                  target="_blank"
-                  href="https://twitter.com/intent/tweet?text=get free bulma templates:;url=https://github.com/BulmaTemplates/bulma-templates"
-                >
-                  <span class="icon">
-                    <i class="fab fa-twitter"></i>
-                  </span>
-                  <span>
-                    Tweet
-                  </span>
-                </a>
-              </p>
-              <p class="control">
-                <a
-                  class="button is-primary"
-                  href="https://github.com/BulmaTemplates/bulma-templates"
-                >
-                  <span class="icon">
-                    <i class="fas fa-download"></i>
-                  </span>
-                  <span>Download</span>
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
-    <section class="hero is-info">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Tabs
-          </h1>
-          <h2 class="subtitle">
-            example
-          </h2>
-        </div>
-      </div>
+    <section class="hero is-danger">
       <div class="tabs is-boxed is-centered main-menu" id="nav">
         <ul>
-          <li data-target="pane-1" id="1">
+          <li data-target="pane-1" id="1" class="is-active">
             <a>
               <span class="icon is-small"><i class="fa fa-image"></i></span>
-              <span>Pictures</span>
+              <span>About</span>
             </a>
           </li>
-          <li data-target="pane-2" id="2" class="is-active">
+          <li data-target="pane-2" id="2">
             <a>
               <span class="icon is-small"><i class="fab fa-empire"></i></span>
-              <span>Article</span>
+              <span>Level 1 Results</span>
             </a>
           </li>
           <li data-target="pane-3" id="3">
@@ -147,302 +56,126 @@
               <span class="icon is-small"
                 ><i class="fab fa-superpowers"></i
               ></span>
-              <span>Team</span>
+              <span>Level 2 Results</span>
             </a>
           </li>
           <li data-target="pane-4" id="4">
             <a>
               <span class="icon is-small"><i class="fa fa-film"></i></span>
-              <span>Video</span>
+              <span>Level 3 Results</span>
+            </a>
+          </li>
+          <li data-target="pane-5" id="5">
+            <a>
+              <span class="icon is-small"><i class="fa fa-film"></i></span>
+              <span>Limitations</span>
             </a>
           </li>
         </ul>
       </div>
       <div class="tab-content">
-        <div class="tab-pane" id="pane-1">
-          <figure>
-            <img
-              src="https://source.unsplash.com/0_xMuEbpFAQ/400x400"
-              alt="💯"
-              class="cent"
-            />
-          </figure>
-          <figure>
-            <img
-              src="https://source.unsplash.com/wPMvPMD9KBI/800x600"
-              alt="💯"
-              class="cent"
-            />
-          </figure>
-        </div>
-        <div class="tab-pane" id="pane-3">
-          <div class="columns">
-            <div class="container">
-              <div class="columns">
-                <div class="column">
-                  <article class="media">
-                    <div class="media-left">
-                      <i class="fab fa-github-square fa-4x"></i>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>Dominic Ipsum</strong>
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aenean efficitur sit amet massa fringilla
-                          egestas. Nullam condimentum luctus turpis.
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="media">
-                    <div class="media-left">
-                      <i class="fab fa-empire fa-4x"></i>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>Cassie Ipsum</strong>
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aenean efficitur sit amet massa fringilla
-                          egestas. Nullam condimentum luctus turpis.
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="column">
-                  <article class="media">
-                    <div class="media-left">
-                      <i class="fab fa-ravelry fa-4x"></i>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>Avery Ipsum</strong>
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aenean efficitur sit amet massa fringilla
-                          egestas. Nullam condimentum luctus turpis.
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="media">
-                    <div class="media-left">
-                      <i class="fab fa-github-alt fa-4x"></i>
-                    </div>
-                    <div class="media-content">
-                      <div class="content">
-                        <p>
-                          <strong>io Ipsum</strong>
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aenean efficitur sit amet massa fringilla
-                          egestas. Nullam condimentum luctus turpis. ╳
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="pane-4">
-          <div class="columns is-centered">
-            <div class="column is-three-quarters">
-              <div class="embed-container image">
-                <iframe
-                  src="https://player.vimeo.com/video/261794608"
-                  frameborder="0"
-                  webkitAllowFullScreen
-                  mozallowfullscreen
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane is-active" id="pane-2">
+        <div class="tab-pane is-active" id="pane-1">
           <div class="content">
-            <h1>Hello World</h1>
+            <h1 class="has-text-primary">DATA IN NEWS</h1>
             <p>
-              Lorem ipsum<sup><a>[1]</a></sup> dolor sit amet, consectetur
-              adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida,
-              nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut
-              vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel,
-              interdum mattis neque. Sub<sub>script</sub> works as well!
+              This indicator model is developed to assess the use and engagement
+              of statistics in Nepali news portals. The model is largely a
+              contextualization of IASE 2016 Roundtable Paper proposed by Thilo
+              Klein, Anais Galdin and El Iza Mohamedou. The paper argues that
+              the writing of news reporters can be seen as an image for a
+              nation's demand for statistical facts and critical analysis. The
+              data source for the model is Nepali news portals that support RSS
+              feeds and are published in English. The news portals that fit
+              these criteria are The Himalayan Times, Onlinekhabar, Nepali
+              Times, Telegraph Nepal, Kathmandu Tribune and Lokaantar. Starting
+              from the 9th of December 2019, more than {{total_articles}} news
+              articles were collected and analysed. <br /><br />The results show
+              that very few news articles indicate the source of data or mention
+              development indicators. However, articles that discuss data,
+              reports, research, statistics, and related topics do a good job of
+              critically engaging with these ideas. These articles use keywords
+              that can be used to assess the quality of research studies. But,
+              the analysis also points out that the articles do not
+              mathematically engage with the topics of data and statistics. The
+              keywords that suggest the use of mathematical discourse to
+              scrutinize the ideas of data and statistics in Nepali news is
+              missing.
             </p>
-            <h2>Second level</h2>
+            <h3 class="has-text-primary">Level 1 Analysis</h3>
             <p>
-              Curabitur accumsan turpis pharetra
-              <strong>augue tincidunt</strong> blandit. Quisque condimentum
-              maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna
-              vel cursus venenatis. Suspendisse potenti. Etiam mattis sem
-              rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et
-              neque nisl.
+              For each of the six news portals, the number of news articles
+              which have at least one keyword indicating the presence of data
+              source is calculated. Some examples of keywords in this context
+              are household survey, population census, geospatial data etc.
+              Similarly, the number of news articles with keywords indicating
+              statistical indicators and keywords from the list of statistical
+              capacity building projects is calculated. Some examples are
+              indicators used in the analysis in the context of Nepal are GDP,
+              GNP, HDI, WDI, CDI etc.
             </p>
-            <ul>
-              <li>
-                In fermentum leo eu lectus mollis, quis dictum mi aliquet.
-              </li>
-              <li>
-                Morbi eu nulla lobortis, lobortis est in, fringilla felis.
-              </li>
-              <li>
-                Aliquam nec felis in sapien venenatis viverra fermentum nec
-                lectus.
-              </li>
-              <li>Ut non enim metus.</li>
-            </ul>
-            <h3>Third level</h3>
+            <h6 class="has-text-primary">Level 1 Keywords</h6>
+            <script src="https://gist.github.com/datafornepal/051801fa9c02ddf32aa01a28174862b5.js"></script>
+            <h3 class="has-text-primary">Level 2 Analysis</h3>
             <p>
-              Quisque ante lacus, malesuada ac auctor vitae, congue
-              <a href="#">non ante</a>. Phasellus lacus ex, semper ac tortor
-              nec, fringilla condimentum orci. Fusce eu rutrum tellus.
+              For each of the six news portals, articles that directly
+              referenced data, records, research, statistics, or studies were
+              collected. Among these articles, the share of articles that
+              included at least one keyword that indicates critical engagement
+              with the topics of data and statistics was calculated. Examples of
+              keywords included ambiguous, error, bias, fake, impartial,
+              precise, scientific, unreliable.
             </p>
-            <ol>
-              <li>Donec blandit a lorem id convallis.</li>
-              <li>Cras gravida arcu at diam gravida gravida.</li>
-              <li>Integer in volutpat libero.</li>
-              <li>Donec a diam tellus.</li>
-              <li>Aenean nec tortor orci.</li>
-              <li>
-                Quisque aliquam cursus urna, non bibendum massa viverra eget.
-              </li>
-              <li>Vivamus maximus ultricies pulvinar.</li>
-            </ol>
-            <blockquote>
-              Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero
-              hendrerit ipsum, ut blandit est tellus sit amet turpis.
-            </blockquote>
+            <h6 class="has-text-primary">Level 2 Keywords</h6>
+            <script src="https://gist.github.com/datafornepal/4f0b35c597c377630e68dfbd820e7cff.js"></script>
+            <h3 class="has-text-primary">Level 3 Analysis</h3>
             <p>
-              Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et
-              <em>justo sodales</em> elementum. Maecenas ultrices lacus quis
-              neque consectetur, et lobortis nisi molestie.
+              For each of the six news portals, articles that directly
+              referenced data, records, research, statistics, or studies were
+              collected. Among these articles, the share of articles that
+              included at least one keyword that indicates mathematical
+              engagement with the topics of data and statistics was calculated.
+              Examples of keywords included data manipulation, lead question,
+              report bias, sample select, sample size.
             </p>
+            <h6 class="has-text-primary">Level 3 Keywords</h6>
+            <script src="https://gist.github.com/datafornepal/582c3c77566f92d4c03fb755a76edea6.js"></script>
+          </div>
+        </div>
+        <div class="tab-pane" id="pane-2"></div>
+        <div class="tab-pane" id="pane-3"></div>
+        <div class="tab-pane" id="pane-4"></div>
+        <div class="tab-pane" id="pane-5">
+          <div class="content">
+            <h1 class="has-text-primary">LIMITATIONS AND NEXT STEPS</h1>
             <p>
-              Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec
-              mattis vulputate risus in luctus. Maecenas vestibulum interdum
-              commodo.
-            </p>
-            <dl>
-              <dt>Web</dt>
-              <dd>
-                The part of the Internet that contains websites and web pages
-              </dd>
-              <dt>HTML</dt>
-              <dd>A markup language for creating web pages</dd>
-              <dt>CSS</dt>
-              <dd>A technology to make HTML look better</dd>
-            </dl>
-            <p>
-              Suspendisse egestas sapien non felis placerat elementum. Morbi
-              tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla.
-              Nulla facilisi. Nullam ac erat ante.
-            </p>
-            <h4>Fourth level</h4>
-            <p>
-              Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla
-              ac. Mauris euismod metus a tellus laoreet, at elementum ex
-              efficitur.
-            </p>
-            <pre>
-                                                                                                &lt;!DOCTYPE html&gt;
-                                                                                                &lt;html&gt;
-                                                                                                  &lt;head&gt;
-                                                                                                    &lt;title&gt;Hello World&lt;/title&gt;
-                                                                                                  &lt;/head&gt;
-                                                                                                  &lt;body&gt;
-                                                                                                    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.&lt;/p&gt;
-                                                                                                  &lt;/body&gt;
-                                                                                                &lt;/html&gt;
-                    </pre
-            >
-            <p>
-              Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue
-              cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est
-              maximus est porta condimentum in eu justo. Nulla id iaculis
-              sapien.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>One</th>
-                  <th>Two</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Three</td>
-                  <td>Four</td>
-                </tr>
-                <tr>
-                  <td>Five</td>
-                  <td>Six</td>
-                </tr>
-                <tr>
-                  <td>Seven</td>
-                  <td>Eight</td>
-                </tr>
-                <tr>
-                  <td>Nine</td>
-                  <td>Ten</td>
-                </tr>
-                <tr>
-                  <td>Eleven</td>
-                  <td>Twelve</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              Phasellus porttitor enim id metus volutpat ultricies. Ut nisi
-              nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis
-              lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit
-              amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi
-              lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere
-              est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis.
-              Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl
-              placerat, pretium metus vel, euismod ipsum. Proin tempor cursus
-              nisl vel condimentum. Nam pharetra varius metus non pellentesque.
-            </p>
-            <h5>Fifth level</h5>
-            <p>
-              Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed
-              tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula
-              mi, in luctus elit volutpat porta. Phasellus molestie diam vel
-              nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo.
-              Nam et sollicitudin odio.
-            </p>
-            <figure>
-              <img
-                src="https://bulma.io/images/placeholders/256x256.png"
-                alt="💯"
-              />
-              <img
-                src="https://bulma.io/images/placeholders/256x256.png"
-                alt="💯"
-              />
-              <figcaption>
-                Figure 1: Some beautiful placeholders
-              </figcaption>
-            </figure>
-            <h6>Sixth level</h6>
-            <p>
-              Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec
-              pulvinar lacus sed diam dignissim, ut eleifend eros accumsan.
-              Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc,
-              scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae
-              maximus purus, nec consectetur dui. Suspendisse euismod, elit vel
-              rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio
-              vitae est. Etiam at cursus metus.
+              Several limitations of the model in the context of data collection
+              and analysis methodology have been identified.<br /><br />
+              First of all, very few Nepali news portals support news categories
+              or webpage based RSS. We found only 6 in English when we searched
+              for RSS between 9th December 2019- 9th January 2020. Besides, the
+              portals that support RSS do not update their feeds on a regular
+              basis. <br /><br />Additionally, the only language medium
+              supported currently is English. The model fails to capture
+              segments of several news portals and a significant population size
+              who consume news in Nepali. The model also makes the assumption
+              that sequence matching and keywords association implies
+              statistical literacy. This leads to a high rate of false-positives
+              and false-negatives are high. <br /><br />However, there are
+              several plans being envisioned to mitigate these limitations.
+              First and foremost, the data collection process is always ongoing.
+              The backend of this dashboard collects data automatically on a
+              daily basis. This implies, over a period of time, the sample size
+              will be large enough for more accurate results.
+              <br /><br />Similarly, a plan for dialogue with more news portals
+              is in motion to request RSS support. Lastly, to capture the
+              segmentation of population who consume news in Nepali, a research
+              and implementation plan is being developed to update the model to
+              support the language.
             </p>
           </div>
         </div>
       </div>
+      <footer class="footer"></footer>
     </section>
     <script src="{{ url_for('static', filename = 'js/bulma.js') }}"></script>
     <script src="{{ url_for('static', filename = 'js/tabs.js') }}"></script>
