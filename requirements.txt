@@ -10,3 +10,4 @@ beautifulsoup4==4.8.1
 nltk==3.4.5
 lxml==4.4.2
 APScheduler==3.6.3
+Flask-BasicAuth==0.2.0
