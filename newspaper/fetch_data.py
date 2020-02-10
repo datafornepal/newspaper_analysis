@@ -89,40 +89,40 @@ def fetch_merge_analyze_data():
     himalayan_times_url = "https://thehimalayantimes.com/category{}/feed/"
     raw_HT = pd.DataFrame(performRSS(himalayan_times_url, links)).dropna()
     prev_HT = pd.read_csv('newspaper/static/datasets/ht.csv')
-    df_HT = pd.concat([prev_HT, raw_HT], sort=False).drop_duplicates().dropna()
+    df_HT = pd.concat([prev_HT, raw_HT], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_HT.to_csv('newspaper/static/datasets/ht.csv', index=False)
     
     online_khabar_url = "https://english.onlinekhabar.com/category{}/feed/"
     raw_OK = pd.DataFrame(performRSS(online_khabar_url, links)).dropna()
     prev_OK = pd.read_csv('newspaper/static/datasets/ok.csv')
-    df_OK = pd.concat([prev_OK, raw_OK], sort=False).drop_duplicates().dropna()
+    df_OK = pd.concat([prev_OK, raw_OK], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_OK.to_csv('newspaper/static/datasets/ok.csv', index=False)
     
     
     nepali_times_url = "https://www.nepalitimes.com/nt{}/feed/"
     raw_NT = pd.DataFrame(performRSS(nepali_times_url, links)).dropna()
     prev_NT = pd.read_csv('newspaper/static/datasets/nt.csv')
-    df_NT = pd.concat([prev_NT, raw_NT], sort=False).drop_duplicates().dropna()
+    df_NT = pd.concat([prev_NT, raw_NT], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_NT.to_csv('newspaper/static/datasets/nt.csv', index=False)
     
     
     telegraph_nepal_url = "http://telegraphnepal.com/category{}/feed/"
     raw_TN = pd.DataFrame(performRSS(telegraph_nepal_url, links)).dropna()
     prev_TN = pd.read_csv('newspaper/static/datasets/tn.csv')
-    df_TN = pd.concat([prev_TN, raw_TN], sort=False).drop_duplicates().dropna()
+    df_TN = pd.concat([prev_TN, raw_TN], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_TN.to_csv('newspaper/static/datasets/tn.csv', index=False)
     
     
     kathmandu_tribune_url = "https://kathmandutribune.com/category{}/feed/"
     raw_KT = pd.DataFrame(performRSS(kathmandu_tribune_url, links)).dropna()
     prev_KT = pd.read_csv('newspaper/static/datasets/kt.csv')
-    df_KT = pd.concat([prev_KT, raw_KT], sort=False).drop_duplicates()
+    df_KT = pd.concat([prev_KT, raw_KT], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_KT.to_csv('newspaper/static/datasets/kt.csv', index=False)
     
     lokaantar_url = "http://english.lokaantar.com/category{}/feed/"
     raw_LK = pd.DataFrame(performRSS(lokaantar_url, links)).dropna()
     prev_LK = pd.read_csv('newspaper/static/datasets/lk.csv')
-    df_LK = pd.concat([prev_LK, raw_LK], sort=False).drop_duplicates().dropna()
+    df_LK = pd.concat([prev_LK, raw_LK], sort=False).drop_duplicates(subset='url', keep="first").dropna()
     df_LK.to_csv('newspaper/static/datasets/lk.csv', index=False)
     
     df_HT = pd.read_csv('newspaper/static/datasets/ht.csv').dropna()
