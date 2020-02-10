@@ -16,10 +16,8 @@
 <meta property="og:description" content="Statistical literacy index based on national newspaper archives" />
 <meta
   property="og:image"
-  content="https://datainnews.ml/static/img/logo.png"
+  content="{{ url_for('static', filename = 'img/logomin.png') }}"
 />
-
-
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename = 'css/bulma.css') }}"
@@ -38,12 +36,17 @@
     <nav class="navbar is-primary">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img
+          <!-- <img
             src="{{ url_for('static', filename = 'img/logo.png') }}"
-            alt="Bulma: a modern CSS framework based on Flexbox"
+            alt=""
             width="112"
             height="28"
-          />
+          /> -->
+                <p class="title is-5 has-text-white is-spaced">
+        DATA IN NEWS
+        <sup class="title is-6 has-text-danger">(BETA)</sup>
+      </p>
+         
         </a>
       </div>
     </nav>
