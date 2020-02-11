@@ -5,7 +5,7 @@
     <title>DATA IN NEWS</title>
     <link
       rel="shortcut icon"
-      href="https://datainnews.ml/static/img/logo.png"
+      href="{{ url_for('static', filename = 'img/logomin.png') }}"
       type="image/x-icon"
     />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,7 +16,7 @@
 <meta property="og:description" content="Statistical literacy index based on national newspaper archives" />
 <meta
   property="og:image"
-  content="{{ url_for('static', filename = 'img/logomin.png') }}"
+  content="{{ url_for('static', filename = 'img/chart.PNG') }}"
 />
     <link
       rel="stylesheet"
@@ -225,7 +225,7 @@
         </div>
         <div class="tab-pane" id="pane-4">
             <div class="content">
-             <h1 class="has-text-primary">LEVEL 1 RESULTS</h1>
+             <h1 class="has-text-primary">LEVEL 3 RESULTS</h1>
              <div class="columns">
                 <div class="column">
                      {{div6|safe}}
