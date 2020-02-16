@@ -453,7 +453,7 @@ body {
 }
 
 a {
-  color: #3273dc;
+  color: #52b7ff;
   cursor: pointer;
   text-decoration: none;
 }
@@ -11664,7 +11664,7 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: #696969;
+  background-color: #363636;
   padding: 3rem 1.5rem 6rem;
 }
 /*# sourceMappingURL=bulma.css.map */

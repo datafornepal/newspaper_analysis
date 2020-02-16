@@ -75,7 +75,7 @@ def set_random_df():
 def main_job():
     # This if for test
     # return get_random_df()
-    return get_data()
+    return getdata()
 
 # TODO check for conflicts
 @application.route('/scheduler/start')
