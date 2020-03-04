@@ -43,9 +43,19 @@ def performRSS(url, categories):
             'category': category, 
             'published_date':entry.published})
             all_links.append(temp_dict)        
-    return 
+    return all_links
 
-
+def performRSSNew(url):
+    all_links = []
+    NewsFeed = feedparser.parse(url)
+    entries = NewsFeed.entries
+    for entry in entries:
+            temp_dict = ({'url': entry.link, 
+            'content': cleanHTML(entry.content[0].value), 
+            'category': '', 
+            'published_date':entry.published})
+            all_links.append(temp_dict)    
+    return all_linkss
 
 def level1_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 
