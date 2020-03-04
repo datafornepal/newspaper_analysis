@@ -43,7 +43,9 @@ def performRSS(url, categories):
             'category': category, 
             'published_date':entry.published})
             all_links.append(temp_dict)        
-    return all_links
+    return 
+
+
 
 def level1_count(article):
     word_tokens = word_tokenize(article.lower().rstrip()) 

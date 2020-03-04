@@ -47,25 +47,6 @@ def index():
       column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist())
       )
 
-@application.route('/getdata')
-def getdata():
-    fetch_merge_analyze_data()
-    return ('done')
-
-
-@application.route('/scheduler/get_random_df')
-@basic_auth.required
-def get_random_df():
-    df = pd.read_csv('newspaper/static/datasets/scheduler_test.csv')
-    table_html = df.to_html()
-    return render_template('scheduler_test.html', table_html = table_html)
-
-@application.route('/scheduler/set_random_df')
-@basic_auth.required
-def set_random_df():
-    df = pd.DataFrame(np.random.randint(0, 1000, size=(10, 4)), columns=list('ABCD'))
-    df.to_csv('newspaper/static/datasets/scheduler_test.csv', index=False)
-    return 'done' 
 
 
 # This route is created so that in cases of emergencies
@@ -75,7 +56,10 @@ def set_random_df():
 def main_job():
     # This if for test
     # return get_random_df()
-    return getdata()
+    if (fetch_merge_analyze_data()):
+        return "done"
+    return "check logs"
+    
 
 # TODO check for conflicts
 @application.route('/scheduler/start')
