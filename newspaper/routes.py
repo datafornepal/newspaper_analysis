@@ -1,7 +1,7 @@
 from flask import render_template, request
 from newspaper import application
 import pandas as pd
-from newspaper.fetch_data import fetch_merge_analyze_data, lengths_of_keywords
+from newspaper.fetch_data import fetch_merge_analyze_data_new, lengths_of_keywords
 from newspaper.level_chart import create_level, create_level_percent, create_pie_chart
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
@@ -56,7 +56,7 @@ def index():
 def main_job():
     # This if for test
     # return get_random_df()
-    if (fetch_merge_analyze_data()):
+    if (fetch_merge_analyze_data_new()):
         return "done"
     return "check logs"
     
