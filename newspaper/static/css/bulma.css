@@ -7205,7 +7205,7 @@ a.list-item {
 }
 
 .navbar.is-primary {
-  background-color: #00d1b2;
+  background-color: #000000;
   color: #fff;
 }
 
@@ -10982,7 +10982,7 @@ label.panel-block:hover {
 }
 
 .hero.is-primary {
-  background-color: #00d1b2;
+  background-color: #007160;
   color: #fff;
 }
 

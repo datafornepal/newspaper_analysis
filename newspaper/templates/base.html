@@ -29,13 +29,17 @@
       rel="stylesheet"
       href="{{ url_for('static', filename = 'css/tabs.css') }}"
     />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script
       src="https://kit.fontawesome.com/7dc3015a44.js"
       crossorigin="anonymous"
     ></script>
   </head>
-  <body style="background-color: #00d1b2;">
+  <body style="background-color: gray;">
     <nav class="navbar is-primary">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
@@ -90,7 +94,7 @@
         </ul>
       </div>
     </section>
-    <div class="container is-mobile">
+    <div class="container">
       <div class="tab-content">
         <div class="tab-pane is-active" id="pane-1">
           <div class="content">
@@ -114,7 +118,8 @@
               The data source for the model was Nepali news portals that support
               RSS feeds and are published in English. The news portals that meet
               these criteria are the Himalayan Times, Onlinekhabar, the Nepali
-              Times, the Telegraph Nepal, the Kathmandu Tribune, and Lokaantar.
+              Times, the Telegraph Nepal, the Kathmandu Tribune, Lokaantar,
+              Ratopati, Nepali Sansar.
             </p>
             <h3 class="has-text-primary">Level 1 Analysis</h3>
             <p>
@@ -189,10 +194,10 @@
             <h1 class="has-text-primary">LEVEL 1 RESULTS</h1>
             <div class="columns">
               <div class="column">
-                {{div1|safe}}
+                <div id="div1"></div>
               </div>
               <div class="column">
-                {{div2|safe}}
+                <div id="div2"></div>
               </div>
             </div>
             <table class="table">
@@ -220,13 +225,10 @@
         <div class="tab-pane" id="pane-3">
           <div class="content">
             <h1 class="has-text-primary">LEVEL 2 RESULTS</h1>
+
             <div class="columns">
-              <div class="column">
-                {{div4|safe}}
-              </div>
-              <div class="column">
-                {{div5|safe}}
-              </div>
+              <div class="column"><div id="div3"></div></div>
+              <div class="column"><div id="div4"></div></div>
             </div>
             <table class="table">
               <thead>
@@ -255,10 +257,10 @@
             <h1 class="has-text-primary">LEVEL 3 RESULTS</h1>
             <div class="columns">
               <div class="column">
-                {{div6|safe}}
+                <div id="div5"></div>
               </div>
               <div class="column">
-                {{div7|safe}}
+                <div id="div6"></div>
               </div>
             </div>
             <table class="table">
@@ -290,11 +292,11 @@
               Several limitations of the model in the context of data collection
               and analysis methodology have been identified.<br /><br />
               First of all, very few Nepali news portals support news categories
-              or webpage based RSS. We found only 6 in English when we searched
-              for RSS between 9th December 2019- 9th January 2020. Besides, the
-              portals that support RSS do not update their feeds on a regular
-              basis. <br /><br />Additionally, the only language medium
-              supported currently is English. The model fails to capture
+              or webpage based RSS. We found only 8 in English when we searched
+              for RSS between 9th December 2019- 4th April th January 2020.
+              Besides, the portals that support RSS do not update their feeds on
+              a regular basis. <br /><br />Additionally, the only language
+              medium supported currently is English. The model fails to capture
               segments of several news portals and a significant population size
               who consume news in Nepali. The model also makes the assumption
               that sequence matching and keywords association implies
@@ -406,5 +408,310 @@
     </footer>
 
     <script src="{{ url_for('static', filename = 'js/tabs.js') }}"></script>
+    <script>
+      Highcharts.chart("div1", {
+        chart: {
+          type: "column",
+        },
+        legend:{
+          align: 'left',
+          verticalAlign: 'top',
+        },
+        title: {
+          text: "",
+        },
+
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair: true,
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "Number of Articles",
+          },
+        },
+        tooltip: {
+          headerFormat:
+            '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat:
+            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+          footerFormat: "</table>",
+          shared: true,
+          useHTML: true,
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+          },
+        },
+        series: {{chart1|safe}}
+      });
+    </script>
+
+    <script>
+      Highcharts.chart('div2', {
+        chart: {
+          type: 'column'
+        },
+
+        title: {
+          text: ''
+        },
+        plotOptions: {
+          column:{
+            borderWidth:0,
+            groupPadding:0,
+            shadow:false
+          },
+        },
+        tooltip: {
+              pointFormat: '<b>Percentage: {point.y:.1f}%</b>'
+            },
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair:true
+        },
+        yAxis: {
+          min: 0,
+          max:100,
+          title: {
+            text: 'Percentage',
+          },
+
+        },
+        credits: {
+          enabled: false
+        },
+                exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        series:[{
+          name:'',
+          data: {{ chart2| safe}},
+          showInLegend: false
+        }]
+      });
+    </script>
+
+    <script>
+      Highcharts.chart("div3", {
+        chart: {
+          type: "column",
+        },
+        title: {
+          text: "",
+        },
+
+        legend:{
+          align: 'left',
+          verticalAlign: 'top',
+        },
+
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair: true,
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "Number of Articles",
+          },
+        },
+        tooltip: {
+          headerFormat:
+            '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat:
+            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+          footerFormat: "</table>",
+          shared: true,
+          useHTML: true,
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+          },
+        },
+        series: {{chart3|safe}}
+      });
+    </script>
+
+    <script>
+      Highcharts.chart('div4', {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: ''
+        },
+        plotOptions: {
+          column:{
+            borderWidth:0,
+            groupPadding:0,
+            shadow:false
+          },
+        },
+        tooltip: {
+              pointFormat: '<b>Percentage: {point.y:.1f}%</b>'
+            },
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair:true
+        },
+        yAxis: {
+          min: 0,
+          max:100,
+          title: {
+            text: 'Percentage',
+          },
+
+        },
+        credits: {
+          enabled: false
+        },
+                exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        series:[{
+          name:'',
+          data: {{ chart4| safe}},
+          showInLegend: false
+        }]
+      });
+    </script>
+
+    <script>
+      Highcharts.chart("div5", {
+        chart: {
+          type: "column",
+        },
+        title: {
+          text: "",
+        },
+
+        legend:{
+          align: 'left',
+          verticalAlign: 'top',
+        },
+
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair: true,
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "Number of Articles",
+          },
+        },
+        tooltip: {
+          headerFormat:
+            '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat:
+            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+          footerFormat: "</table>",
+          shared: true,
+          useHTML: true,
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+          },
+        },
+        series: {{chart5|safe}}
+      });
+    </script>
+
+    <script>
+      Highcharts.chart('div6', {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: ''
+        },
+        plotOptions: {
+          column:{
+            borderWidth:0,
+            groupPadding:0,
+            shadow:false
+          },
+        },
+        exporting: {
+          buttons: {
+          contextButton: {
+            menuItems: ['downloadPNG', 'downloadSVG']
+          }
+          }
+        },
+        tooltip: {
+              pointFormat: '<b>Percentage: {point.y:.1f}%</b>'
+            },
+        xAxis: {
+          categories: {{newspapers|safe}},
+          crosshair:true
+        },
+        yAxis: {
+          min: 0,
+          max:100,
+          title: {
+            text: 'Percentage',
+          },
+
+        },
+        credits: {
+          enabled: false
+        },
+        series:[{
+          name:'',
+          data: {{ chart6| safe}},
+          showInLegend: false
+        }]
+      });
+    </script>
   </body>
 </html>
