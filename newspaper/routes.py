@@ -23,44 +23,62 @@ sched_daily = BackgroundScheduler(daemon=True)
 def index():
 
     df = pd.read_csv('newspaper/static/datasets/all.csv')
-    grouped = df.groupby('newspaper').sum().join(df.groupby('newspaper').size().to_frame('News Articles'))
+    df = df.groupby('newspaper').sum().join(df.groupby('newspaper').size().to_frame('News Articles'))
+    df.rename({'level_len': 'Level1', 'level2_len': 'Level2', 'level3_len': 'Level3', 'level_2_3_valid':'Filtered Articles'}, inplace=True, axis=1)
 
-    grouped['Level1 %'] = (100*grouped['level_len']/grouped['News Articles']).map('{:,.1f} %'.format)
-    grouped['Level2 %'] = (100*grouped['level2_len']/grouped['level_2_3_valid']).map('{:,.1f} %'.format)
-    grouped['Level3 %'] = (100*grouped['level3_len']/grouped['level_2_3_valid']).map('{:,.1f} %'.format)
+    df['Level1 %'] = (100*df['Level1']/df['News Articles']).map('{:,.1f} %'.format)
+    df['Level2 %'] = (100*df['Level2']/df['Filtered Articles']).map('{:,.1f} %'.format)
+    df['Level3 %'] = (100*df['Level3']/df['Filtered Articles']).map('{:,.1f} %'.format)
 
 
     mapping = pd.DataFrame({'Newspaper': ['The Himalayan Times', 'Katmandu Tribune', 'Lokaantar', 'Nepali Sansar', 'Nepali Times', 'Online Khabar', 'Telegraph Nepal']}, 
              index=['ht', 'kt', 'lk', 'ns', 'nt', 'ok', 'tn'])
 
-    grouped = grouped.join(mapping)
+    df = df.join(mapping)
 
-    return grouped.to_html()
+    len_data_level_1, len_data_level_2, len_data_level_3 = lengths_of_keywords()
+    newspapers = df['Newspaper'].tolist()
 
-    # len_data_level_1, len_data_level_2, len_data_level_3 = lengths_of_keywords()
 
-    # chart1 = [{'name':'Level 1','data':df['Level1'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
+    chart1 = [{'name':'Level 1','data':df['Level1'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
+    chart2 = (df['Level1']/df['News Articles']*100).tolist()
+
+    chart3 = [{'name':'Level 2','data':df['Level2'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
+    chart4 = (df['Level2']/df['News Articles']*100).tolist()
+
+    chart5 = [{'name':'Level 3','data':df['Level3'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
+    chart6 = (df['Level3']/df['News Articles']*100).tolist()
     
-    # chart2 = df['Level1']/df['News Articles']*100
-    # chart2 = chart2.tolist()
-    
-    # chart3 = [{'name':'Level 2','data':df2['Level2'].tolist()},{'name':'Total Articles','data':df2['News Articles'].tolist()}]
-    
-    # chart4 = df2['Level2']/df2['News Articles']*100
-    # chart4 = chart4.tolist()
-    
-    # chart5 = [{'name':'Level 3','data':df3['Level3'].tolist()},{'name':'Total Articles','data':df3['News Articles'].tolist()}]
-    
-    # chart6 = df3['Level3']/df3['News Articles']*100
-    # chart6 = chart6.tolist()
-    
-    # newspapers = df['Newspaper'].tolist()
-    
-    # return render_template('base.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), \
-    #   len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
-    #   column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
-    #   column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist()), chart1=chart1, newspapers=newspapers, chart2=chart2, chart3=chart3, chart4=chart4, chart5=chart5,chart6=chart6
-    #   )
+    level1 = df[['Newspaper', 'Level1', 'News Articles', 'Level1 %']]
+    column_names_level1 = level1.columns.values
+    row_data_level1 = list(level1.values.tolist())
+
+    level2 = df[['Newspaper', 'Level2', 'Filtered Articles', 'News Articles',  'Level2 %']]
+    column_names_level2 = level2.columns.values
+    row_data_level2 = list(level2.values.tolist())
+
+    level3 = df[['Newspaper', 'Level3', 'Filtered Articles', 'News Articles', 'Level3 %']]
+    column_names_level3 = level3.columns.values
+    row_data_level3 = list(level3.values.tolist())
+
+    content = {
+        'newspapers': newspapers,
+        'chart1': chart1,
+        'chart2': chart2,
+        'chart3': chart3,
+        'chart4': chart4,
+        'chart5': chart5,
+        'chart6': chart6,
+        'column_names_level1' : column_names_level1,
+        'row_data_level1' : row_data_level1,
+        'column_names_level2' : column_names_level2,
+        'row_data_level2' : row_data_level2,
+        'column_names_level3' : column_names_level3,
+        'row_data_level3' : row_data_level3,
+    }
+
+    return render_template ('base.html', **content)
+
 
 
 # This route is created so that in cases of emergencies
