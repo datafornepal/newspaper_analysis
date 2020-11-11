@@ -43,10 +43,6 @@ def performRSSNew(url, newspaper):
 
 def level1_count(article):
     if article:
-        word_tokens = word_tokenize(article.lower().rstrip()) 
-        filtered_sentence = [w for w in word_tokens if not w in stop_words] 
-        
-        article = ' '.join(filtered_sentence)  
         keyword_list = []
         for word in data_level1:
             search_ = (r"\b"+word.split()[0]+r"[a-zA-Z]*\s\b"+word.split()[1]+"[a-zA-Z]*")
