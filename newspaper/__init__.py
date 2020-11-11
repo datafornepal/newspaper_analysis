@@ -2,7 +2,6 @@ from flask import Flask
 from os import environ
 from dotenv import load_dotenv
 from os.path import join, dirname
-import nltk
 
 application = Flask(__name__)
 
@@ -19,10 +18,6 @@ application.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 application.config['BASIC_AUTH_USERNAME'] = environ.get('BASIC_AUTH_USERNAME')
 application.config['BASIC_AUTH_PASSWORD'] = environ.get('BASIC_AUTH_PASSWORD')
 
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
 
 from newspaper import routes
 
