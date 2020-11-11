@@ -81,7 +81,10 @@ def level_2_3_filter(article):
     return 0
 
 def level_len(count_list):
+    if type(count_list) == str:
+        return 1 if len(count_list)>2 else 0
     return 1 if len(count_list)>0 else 0
+
 
 def fetch_merge_analyze_data_new():
     # Fetch and Merge data
