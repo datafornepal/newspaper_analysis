@@ -22,7 +22,10 @@ def lengths_of_keywords():
     return len(data_level1), len(data_level2), len(data_level3)
 
 def cleanHTML(raw_html):
-    return BeautifulSoup(raw_html, "lxml").text
+    text = BeautifulSoup(raw_html, "lxml").text
+    word_tokens = word_tokenize(text.lower().rstrip()) 
+    filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+    return ' '.join(filtered_sentence)
 
 def performRSSNew(url):
     all_links = []
