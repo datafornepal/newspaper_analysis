@@ -54,15 +54,20 @@ def level1_count(article):
         return keyword_list
     return []
 
-def level_2_3_count(article, data):
-    if article:
-        word_tokens = word_tokenize(article.lower().rstrip()) 
-        filtered_sentence = [w for w in word_tokens if not w in stop_words] 
-        
-
-        article = ' '.join(filtered_sentence)  
+def level2_count(article, valid):
+    if valid==1:
         keyword_list = []
-        for word in data:
+        for word in data_level2:
+            search_ = (r"\b"+word+r"[a-zA-Z]*")
+            if re.search(search_, article):
+                keyword_list.append(word)
+        return keyword_list
+    return []
+
+def level3_count(article, valid):
+    if valid==1:
+        keyword_list = []
+        for word in data_level3:
             search_ = (r"\b"+word+r"[a-zA-Z]*")
             if re.search(search_, article):
                 keyword_list.append(word)
