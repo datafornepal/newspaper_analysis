@@ -146,7 +146,7 @@ def main_job():
 @basic_auth.required
 def start_scheduler():
     try:
-        sched_daily.add_job(main_job, 'interval', minutes=180,
+        sched_daily.add_job(main_job, 'interval', minutes=1440,
                             id='get_csvs')
         sched_daily.start()
         return 'start collecting csvs'
