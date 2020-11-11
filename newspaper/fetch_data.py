@@ -27,22 +27,17 @@ def cleanHTML(raw_html):
     filtered_sentence = [w for w in word_tokens if not w in stop_words] 
     return ' '.join(filtered_sentence)
 
-def performRSSNew(url):
+def performRSSNew(url, newspaper):
     all_links = []
     NewsFeed = feedparser.parse(url)
     entries = NewsFeed.entries
     for entry in entries:
-            if (url == 'http://english.ratopati.com/feed/'):
-                content = entry.summary
-                published = "-"
-            else:
-                content =  cleanHTML(entry.content[0].value)
-                published = entry.published
-            (entry.summary+'\n\n\n')
+            content =  cleanHTML(entry.content[0].value)
+            published = entry.published
             temp_dict = ({'url': entry.link, 
-            'content': content, 
-            'category': '-', 
-            'published_date':published})
+            'content': content , 
+            'newspaper': newspaper,
+            'published_date': published})
             all_links.append(temp_dict)    
     return all_links
 
