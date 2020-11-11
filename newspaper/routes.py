@@ -22,34 +22,45 @@ sched_daily = BackgroundScheduler(daemon=True)
 @application.route('/')
 def index():
 
-    df = pd.read_csv('newspaper/static/datasets/level1.csv')
-    df2 = pd.read_csv('newspaper/static/datasets/level2.csv')
-    df3 = pd.read_csv('newspaper/static/datasets/level3.csv')
+    df = pd.read_csv('newspaper/static/datasets/all.csv')
+    grouped = df.groupby('newspaper').sum().join(df.groupby('newspaper').size().to_frame('News Articles'))
 
-    df['Level1 %'] = round(df['Level1']/df['News Articles']*100).map('{:,.0f} %'.format)
-    df2['Level2 %'] = round(df2['Level2']/df2['News Articles']*100).map('{:,.0f} %'.format)
-    df3['Level3 %'] = round(df3['Level3']/df3['News Articles']*100).map('{:,.0f} %'.format)
+    grouped['Level1 %'] = (100*grouped['level_len']/grouped['News Articles']).map('{:,.1f} %'.format)
+    grouped['Level2 %'] = (100*grouped['level2_len']/grouped['level_2_3_valid']).map('{:,.1f} %'.format)
+    grouped['Level3 %'] = (100*grouped['level3_len']/grouped['level_2_3_valid']).map('{:,.1f} %'.format)
 
 
-    len_data_level_1, len_data_level_2, len_data_level_3 = lengths_of_keywords()
+    mapping = pd.DataFrame({'Newspaper': ['The Himalayan Times', 'Katmandu Tribune', 'Lokaantar', 'Nepali Sansar', 'Nepali Times', 'Online Khabar', 'Telegraph Nepal']}, 
+             index=['ht', 'kt', 'lk', 'ns', 'nt', 'ok', 'tn'])
 
-    chart1 = [{'name':'Level 1','data':df['Level1'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
-    chart2 = df['Level1']/df['News Articles']*100
-    chart2 = chart2.tolist()
-    chart3 = [{'name':'Level 2','data':df2['Level2'].tolist()},{'name':'Total Articles','data':df2['News Articles'].tolist()}]
-    chart4 = df2['Level2']/df2['News Articles']*100
-    chart4 = chart4.tolist()
-    chart5 = [{'name':'Level 3','data':df3['Level3'].tolist()},{'name':'Total Articles','data':df3['News Articles'].tolist()}]
-    chart6 = df3['Level3']/df3['News Articles']*100
-    chart6 = chart6.tolist()
+    grouped = grouped.join(mapping)
+
+    return grouped.to_html()
+
+    # len_data_level_1, len_data_level_2, len_data_level_3 = lengths_of_keywords()
+
+    # chart1 = [{'name':'Level 1','data':df['Level1'].tolist()},{'name':'Total Articles','data':df['News Articles'].tolist()}]
     
-    newspapers = df['Newspaper'].tolist()
-
-    return render_template('base.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), \
-      len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
-      column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
-      column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist()), chart1=chart1, newspapers=newspapers, chart2=chart2, chart3=chart3, chart4=chart4, chart5=chart5,chart6=chart6
-      )
+    # chart2 = df['Level1']/df['News Articles']*100
+    # chart2 = chart2.tolist()
+    
+    # chart3 = [{'name':'Level 2','data':df2['Level2'].tolist()},{'name':'Total Articles','data':df2['News Articles'].tolist()}]
+    
+    # chart4 = df2['Level2']/df2['News Articles']*100
+    # chart4 = chart4.tolist()
+    
+    # chart5 = [{'name':'Level 3','data':df3['Level3'].tolist()},{'name':'Total Articles','data':df3['News Articles'].tolist()}]
+    
+    # chart6 = df3['Level3']/df3['News Articles']*100
+    # chart6 = chart6.tolist()
+    
+    # newspapers = df['Newspaper'].tolist()
+    
+    # return render_template('base.html', column_names_level1=df.columns.values, row_data_level1=list(df.values.tolist()), \
+    #   len_data_level_1=len_data_level_1, len_data_level_2=len_data_level_2, len_data_level_3=len_data_level_3, total_articles=df['News Articles'].sum(), \
+    #   column_names_level2=df2.columns.values, row_data_level2=list(df2.values.tolist()),\
+    #   column_names_level3=df3.columns.values, row_data_level3=list(df3.values.tolist()), chart1=chart1, newspapers=newspapers, chart2=chart2, chart3=chart3, chart4=chart4, chart5=chart5,chart6=chart6
+    #   )
 
 
 # This route is created so that in cases of emergencies
