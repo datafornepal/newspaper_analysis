@@ -16,9 +16,6 @@ from flask_basicauth import BasicAuth
 
 basic_auth = BasicAuth(application)
 
-# logging.basicConfig()
-# logging.getLogger('apscheduler').setLevel(logging.DEBUG)
-
 sched_daily = BackgroundScheduler(daemon=True)
 
 

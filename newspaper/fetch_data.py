@@ -18,14 +18,6 @@ data_level_indicator = [' cpi ', ' fdi ', ' gdp ', ' gnp ', ' hdi ', ' wdi ']
 
 filter_list=[' data ',' record ',' research ',' statistics ',' study ']
 
-links=(['/about-town','/analysis','/business',
-'/commentary','/current_affairs','/editorial',
-'/editorials','/education','/entertainment',
-'/finance','/governance','/headline','/here-now',
-'/international','/interview','/kathmandu','/latest',
-'/lifestyle','/multimedia','/national','/nepal','/opinion',
-'/political','/science-technology','/sports','/travel','/world'])
-
 def lengths_of_keywords():
     return len(data_level1), len(data_level2), len(data_level3)
 
