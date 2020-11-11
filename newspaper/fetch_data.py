@@ -75,12 +75,9 @@ def level3_count(article, valid):
     return []
 
 def level_2_3_filter(article):
-    if article:
-        article = article.lower().rstrip()
-        for word in filter_list:
-            if word in article:
-                return 1
-        return 0
+    for word in filter_list:
+        if word in article:
+            return 1
     return 0
 
 def level_len(count_list):
