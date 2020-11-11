@@ -2,7 +2,7 @@ from flask import Flask
 from os import environ
 from dotenv import load_dotenv
 from os.path import join, dirname
-
+import nltk
 
 application = Flask(__name__)
 
