@@ -88,7 +88,7 @@ def level_len(count_list):
 
 
 def fetch_merge_analyze_data_new(reset_analysis=False):
-    start = time.time()
+    
     prev_all = pd.read_csv('newspaper/static/datasets/all.csv')
 
     for newspaper in newspapers:
@@ -124,4 +124,4 @@ def fetch_merge_analyze_data_new(reset_analysis=False):
     df_ALL['level3_len'] = df_ALL.level3.apply(level_len)
 
     df_ALL.to_csv('newspaper/static/datasets/all.csv', index=False)
-    return df_ALL
+    return True
