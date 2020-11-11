@@ -25,6 +25,7 @@ sched_daily = BackgroundScheduler(daemon=True)
 def index():
 
     df = pd.read_csv('newspaper/static/datasets/all.csv')
+    total_articles = df.shape[0]
     df = df.groupby('newspaper').sum().join(df.groupby('newspaper'
             ).size().to_frame('News Articles'))
     df.rename({
@@ -108,8 +109,9 @@ def index():
         'row_data_level2': row_data_level2,
         'column_names_level3': column_names_level3,
         'row_data_level3': row_data_level3,
+        'total_articles': total_articles,
         }
-
+    
     return render_template('base.html', **content)
 
 
