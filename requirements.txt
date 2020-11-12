@@ -11,3 +11,5 @@ nltk==3.4.5
 lxml==4.4.2
 APScheduler==3.6.3
 Flask-BasicAuth==0.2.0
+s3fs==0.5.1
+boto3==1.16.15

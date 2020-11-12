@@ -5,6 +5,7 @@ from newspaper.fetch_data import fetch_merge_analyze_data_new, \
     lengths_of_keywords
 from newspaper.level_chart import create_level, create_level_percent, \
     create_pie_chart
+from newspaper.s3_data import read_dataset
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
 import zipfile
@@ -13,6 +14,8 @@ import pathlib
 import traceback
 import flask
 from datetime import date
+
+
 
 from flask_basicauth import BasicAuth
 
@@ -23,8 +26,7 @@ sched_daily = BackgroundScheduler(daemon=True)
 
 @application.route('/')
 def index():
-
-    df = pd.read_csv('newspaper/static/datasets/all.csv')
+    df = read_dataset();
     total_articles = df.shape[0]
     df = df.groupby('newspaper').sum().join(df.groupby('newspaper'
             ).size().to_frame('News Articles'))

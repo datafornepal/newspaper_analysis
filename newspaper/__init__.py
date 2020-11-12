@@ -19,5 +19,9 @@ application.config['BASIC_AUTH_USERNAME'] = environ.get('BASIC_AUTH_USERNAME')
 application.config['BASIC_AUTH_PASSWORD'] = environ.get('BASIC_AUTH_PASSWORD')
 
 
+application.config['AWSAccessKeyId'] = environ.get('AWSAccessKeyId')
+application.config['AWSSecretKey'] = environ.get('AWSSecretKey')
+application.config['AWSRegion'] = environ.get('AWSRegion')
+
 from newspaper import routes
 
