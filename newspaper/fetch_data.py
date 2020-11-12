@@ -6,7 +6,7 @@ import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from newspaper.variables import *
-
+from newspaper.s3_data import read_dataset
 
 stop_words = set(stopwords.words('english'))
 
@@ -90,7 +90,7 @@ def level_len(count_list):
 
 def fetch_merge_analyze_data_new(reset_analysis=False):
     
-    prev_all = pd.read_csv('newspaper/static/datasets/all.csv')
+    prev_all = read_dataset()
 
     for newspaper in newspapers:
         temp = pd.DataFrame(performRSSNew(newspaper[0], newspaper[1]))
@@ -123,6 +123,6 @@ def fetch_merge_analyze_data_new(reset_analysis=False):
                                     ]) if pd.isnull(x.level3) else x.level3),
                                     axis=1)
     df_ALL['level3_len'] = df_ALL.level3.apply(level_len)
-
-    df_ALL.to_csv('newspaper/static/datasets/all.csv', index=False)
+    write_dataset(df_ALL)
+    # df_ALL.to_csv('newspaper/static/datasets/all.csv', index=False)
     return True

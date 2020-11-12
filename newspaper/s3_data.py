@@ -16,3 +16,11 @@ def read_dataset():
     obj = get_boto_client().get_object(Bucket= 'datainnews' , Key = 'all.csv')
     df = pd.read_csv(io.BytesIO(obj['Body'].read()), encoding='utf8')
     return df
+
+def write_dataset(df):
+    csv_buf = StringIO()
+    df.to_csv(csv_buf, header=True, index=False)
+    csv_buf.seek(0)
+    s3.put_object(Bucket=bucket, Body=csv_buf.getvalue(), Key='test.csv')
+
+    
