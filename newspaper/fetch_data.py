@@ -6,7 +6,7 @@ import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from newspaper.variables import *
-from newspaper.s3_data import read_dataset
+from newspaper.s3_data import read_dataset, write_dataset
 
 stop_words = set(stopwords.words('english'))
 
