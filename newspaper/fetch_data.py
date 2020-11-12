@@ -124,5 +124,4 @@ def fetch_merge_analyze_data_new(reset_analysis=False):
                                     axis=1)
     df_ALL['level3_len'] = df_ALL.level3.apply(level_len)
     write_dataset(df_ALL)
-    # df_ALL.to_csv('newspaper/static/datasets/all.csv', index=False)
     return True

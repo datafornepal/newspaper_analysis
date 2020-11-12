@@ -22,6 +22,6 @@ def write_dataset(df):
     csv_buf = StringIO()
     df.to_csv(csv_buf, header=True, index=False)
     csv_buf.seek(0)
-    get_boto_client().put_object(Bucket= 'datainnews', Body=csv_buf.getvalue(), Key='test.csv')
+    get_boto_client().put_object(Bucket= 'datainnews', Body=csv_buf.getvalue(), Key='all.csv')
 
     
