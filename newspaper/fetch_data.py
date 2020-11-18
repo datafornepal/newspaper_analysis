@@ -95,6 +95,7 @@ def fetch_merge_analyze_data_new(reset_analysis=False):
     for newspaper in newspapers:
         temp = pd.DataFrame(performRSSNew(newspaper[0], newspaper[1]))
         df_ALL = pd.concat([prev_all, temp], sort=False)
+        prev_all = df_ALL
 
     df_ALL = df_ALL.drop_duplicates(subset='url', keep='first'
                                     ).reset_index(drop=True)
