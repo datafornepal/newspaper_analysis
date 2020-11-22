@@ -8,7 +8,7 @@
 
 4. https://kathmandutribune.com/feed/
 
-5. http://english.lokaantar.com/feed/
+5. http://english.lokaantar.com/rss/
 
 6. <s>http://english.ratopati.com/feed/</s>
 

@@ -3,7 +3,7 @@ newspapers = [
     ('https://english.onlinekhabar.com/feed', 'ok'),
     ('https://www.nepalitimes.com/feed/', 'nt'),
     ('https://kathmandutribune.com/feed/', 'kt'),
-    ('http://english.lokaantar.com/feed/', 'lk'),
+    ('http://english.lokaantar.com/rss/', 'lk'),
     ('https://www.nepalisansar.com/feed/', 'ns'),
     ('http://telegraphnepal.com/feed/', 'tn'),
     ]
